@@ -56,7 +56,7 @@ No install, server, or internet connection required for the quiz itself.
 
 From the start screen:
 
-- **Run scoring & similarity tests** — full pass/fail report in the page (deck sizes, unanimous roles, tie-break, **12↔60 similarity**, Monte Carlo winner agreement).
+- **Run scoring & similarity tests** — full pass/fail report in the page (deck sizes, unanimous roles, tie-break, **12↔60 similarity**, Monte Carlo winner agreement, **disclaimer copy**).
 - **Run automated random test** — random answers for the current length, with validation and an HTML report.
 
 Or open:
@@ -70,7 +70,8 @@ Or open:
 
 ```js
 ChildhoodRoleQuiz.startQuiz(12);          // or 60
-ChildhoodRoleQuiz.runTests();             // HTML report + return value
+ChildhoodRoleQuiz.runTests();             // HTML report + Promise (includes disclaimer checks)
+ChildhoodRoleQuiz.runDisclaimerTests();   // start screen, results, README.md fetch
 ChildhoodRoleQuiz.runRandomTest({ runs: 25, length: 12 });
 ChildhoodRoleQuiz.score([0,1,2,...], deck); // scores, normalized, baseline
 ChildhoodRoleQuiz.lengths;                // [12, 60]
@@ -78,6 +79,8 @@ ChildhoodRoleQuiz.roles;                  // display names
 ```
 
 Similarity checks confirm that proportion-matched answer patterns produce the same winner and nearly identical normalized shares on 12- and 60-question forms (within rounding tolerance).
+
+Disclaimer checks look for “This is not medical advice”, “Consult a qualified professional”, and “self-assessment doubts” on the start screen, the results screen, and in `README.md`. Fetching `README.md` is skipped when you open `index.html` as a local file (`file://`); serve the folder over HTTP or GitHub Pages to verify the README.
 
 ## Privacy
 
@@ -92,7 +95,7 @@ Answers are scored entirely in the browser. Nothing is uploaded; there is no acc
 
 ## Disclaimer
 
-This is a reflective self-insight tool, not a clinical diagnosis or substitute for professional care.
+**This is not medical advice.** This quiz is a reflective self-insight tool, not a clinical diagnosis or substitute for professional care. Consult a qualified professional if you are experiencing self-assessment doubts.
 
 ---
 

@@ -532,6 +532,11 @@
             Pick the response that feels most true for childhood <em>and</em> for how you tend to
             show up now. There are no wrong answers—only patterns worth noticing.
           </p>
+          <p class="disclaimer" style="margin-top:1rem">
+            This is not medical advice. This quiz is a reflective self-insight tool, not a
+            clinical diagnosis or substitute for professional care. Consult a qualified
+            professional if you are experiencing self-assessment doubts.
+          </p>
           <div class="start-actions">
             <button class="btn btn-primary" type="button" id="start-12-btn">12-question quiz</button>
             <button class="btn btn-primary" type="button" id="start-60-btn">60-question quiz</button>
@@ -582,8 +587,9 @@
               <div id="score-bars"></div>
             </div>
             <p class="disclaimer">
-              This is a reflective tool, not a clinical diagnosis. Use it as a starting point for
-              self-awareness and conversation.
+              This is not medical advice. This quiz is a reflective self-insight tool, not a
+              clinical diagnosis or substitute for professional care. Consult a qualified
+              professional if you are experiencing self-assessment doubts.
             </p>
             <div class="result-actions">
               <button class="btn btn-primary" type="button" id="retake-btn">Retake quiz</button>
@@ -1955,6 +1961,7 @@
        * Pure JS unit test suite for scoring behavior.
        * Run from console: ChildhoodRoleQuiz.runTests()
        * Or open index.html?test=1
+       * Returns a Promise of the summary (includes disclaimer copy checks).
        */
       function runTests(options) {
         const showHtml = !options || options.render !== false;
@@ -2233,27 +2240,235 @@
         }
         assert("rejects_short_array", threw, "expected Error for wrong length");
 
-        const failed = results.filter(function (r) { return !r.pass; });
-        const summary = {
-          passed: results.length - failed.length,
-          failed: failed.length,
-          total: results.length,
-          results: results
-        };
+        return runDisclaimerTests({ render: false }).then(function (disc) {
+          disc.checks.forEach(function (check) {
+            results.push(check);
+          });
 
-        if (typeof console !== "undefined" && console.table) {
-          console.table(results);
+          const failed = results.filter(function (r) { return !r.pass; });
+          const summary = {
+            passed: results.length - failed.length,
+            failed: failed.length,
+            total: results.length,
+            results: results
+          };
+
+          if (typeof console !== "undefined" && console.table) {
+            console.table(results);
+          }
+          console.log(
+            failed.length === 0
+              ? "ChildhoodRoleQuiz tests: ALL PASSED (" + summary.total + ")"
+              : "ChildhoodRoleQuiz tests: " + failed.length + " FAILED",
+            summary
+          );
+
+          if (showHtml) {
+            function rowsFor(list) {
+              return list.map(function (c) {
+                return (
+                  '<tr class="assert-row ' + (c.pass ? "pass" : "fail") + '">' +
+                    "<td>" + (c.pass ? "PASS" : "FAIL") + "</td>" +
+                    "<td>" + escapeHtml(c.name) + "</td>" +
+                    "<td>" + escapeHtml(c.detail) + "</td>" +
+                  "</tr>"
+                );
+              }).join("");
+            }
+
+            function tableFor(list) {
+              if (!list.length) return "";
+              return (
+                "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+                  "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
+                  "<tbody>" + rowsFor(list) + "</tbody>" +
+                "</table></div>"
+              );
+            }
+
+            const similar = results.filter(function (r) {
+              return r.name.indexOf("similar12_60") === 0 || r.name === "normalization_matches_across_lengths";
+            });
+            const scoring = results.filter(function (r) {
+              return r.name.indexOf("unanimous") === 0 ||
+                r.name.indexOf("challenge_questions_") === 0 ||
+                r.name === "majority_challenged" ||
+                r.name === "tie_break_first_max" ||
+                r.name === "rejects_short_array" ||
+                r.name === "short_deck_size" ||
+                r.name === "full_deck_size" ||
+                r.name === "lengths_multiple_of_roles";
+            });
+            const disclaimer = results.filter(function (r) {
+              return r.name.indexOf("disclaimer_") === 0;
+            });
+            const other = results.filter(function (r) {
+              return similar.indexOf(r) < 0 && scoring.indexOf(r) < 0 && disclaimer.indexOf(r) < 0;
+            });
+            const similarPassed = similar.filter(function (r) { return r.pass; }).length;
+            const mc = results.find(function (r) {
+              return r.name === "similar12_60_monte_carlo_winner_agreement";
+            });
+
+            lastReportKind = "unit";
+            renderReport({
+              title: "Scoring & 12↔60 similarity tests",
+              subtitle: summary.passed + " passed · " + summary.failed + " failed · " + summary.total + " total",
+              failed: summary.failed,
+              heroLede: "Unit scoring and 12↔60 similarity checks rendered below. Re-run anytime from the start screen.",
+              unitTestsHtml:
+                "<div class=\"test-summary\">" +
+                  "<div class=\"test-stat\"><span class=\"num\">" + summary.total + "</span><span class=\"lbl\">Total</span></div>" +
+                  "<div class=\"test-stat\"><span class=\"num\">" + summary.passed + "</span><span class=\"lbl\">Passed</span></div>" +
+                  "<div class=\"test-stat\"><span class=\"num\">" + summary.failed + "</span><span class=\"lbl\">Failed</span></div>" +
+                  "<div class=\"test-stat\"><span class=\"num\">" + similarPassed + "/" + similar.length + "</span><span class=\"lbl\">12↔60</span></div>" +
+                "</div>" +
+                "<p class=\"lede\">These checks confirm scoring math and that proportion-matched 12- and 60-question patterns produce similar normalized results.</p>" +
+                (mc
+                  ? "<p class=\"report-meta\"><strong>Monte Carlo winner agreement:</strong> " + escapeHtml(mc.detail) + "</p>"
+                  : "") +
+                "<h3 class=\"test-section-title\">Deck &amp; scoring</h3>" +
+                tableFor(scoring) +
+                "<h3 class=\"test-section-title\">12↔60 similarity</h3>" +
+                tableFor(similar) +
+                (disclaimer.length
+                  ? "<h3 class=\"test-section-title\">Disclaimer</h3>" + tableFor(disclaimer)
+                  : "") +
+                (other.length
+                  ? "<h3 class=\"test-section-title\">Other</h3>" + tableFor(other)
+                  : "")
+            });
+          }
+
+          return summary;
+        });
+      }
+
+      /**
+       * Required medical-disclaimer phrases (matched case-insensitively).
+       */
+      const DISCLAIMER_PHRASES = [
+        { key: "not_medical_advice", text: "This is not medical advice" },
+        { key: "consult_professional", text: "Consult a qualified professional" },
+        { key: "self_assessment_doubts", text: "self-assessment doubts" }
+      ];
+
+      function normalizeDisclaimerText(str) {
+        return String(str || "").replace(/\s+/g, " ").trim().toLowerCase();
+      }
+
+      function textContainsPhrase(haystack, phrase) {
+        return normalizeDisclaimerText(haystack).indexOf(normalizeDisclaimerText(phrase)) !== -1;
+      }
+
+      function fetchReadmeForDisclaimerTests() {
+        if (typeof fetch !== "function") {
+          return Promise.resolve({
+            loaded: false,
+            skipped: true,
+            reason: "fetch unavailable",
+            text: ""
+          });
         }
-        console.log(
-          failed.length === 0
-            ? "ChildhoodRoleQuiz tests: ALL PASSED (" + summary.total + ")"
-            : "ChildhoodRoleQuiz tests: " + failed.length + " FAILED",
-          summary
-        );
+        if (window.location.protocol === "file:") {
+          return Promise.resolve({
+            loaded: false,
+            skipped: true,
+            reason: "file protocol cannot read README.md; serve over HTTP to verify the README",
+            text: ""
+          });
+        }
+        const url = new URL("README.md", window.location.href).href;
+        return fetch(url, { cache: "no-store" }).then(function (res) {
+          if (!res.ok) {
+            throw new Error("HTTP " + res.status + " fetching README.md");
+          }
+          return res.text();
+        }).then(function (text) {
+          return { loaded: true, skipped: false, reason: "", text: text };
+        }).catch(function (err) {
+          return {
+            loaded: false,
+            skipped: false,
+            reason: String(err && err.message ? err.message : err),
+            text: ""
+          };
+        });
+      }
 
-        if (showHtml) {
-          function rowsFor(list) {
-            return list.map(function (c) {
+      /**
+       * Checks that the not-medical-advice disclaimer is on the start screen,
+       * results screen, and README.md (README via fetch when not file://).
+       * Run from console: ChildhoodRoleQuiz.runDisclaimerTests()
+       */
+      function runDisclaimerTests(options) {
+        const showHtml = !options || options.render !== false;
+        const checks = [];
+
+        function assert(name, condition, detail) {
+          checks.push({
+            name: name,
+            pass: !!condition,
+            detail: detail || ""
+          });
+        }
+
+        const introText = els.intro ? els.intro.textContent : "";
+        const resultText = els.result ? els.result.textContent : "";
+
+        DISCLAIMER_PHRASES.forEach(function (phrase) {
+          assert(
+            "disclaimer_intro_" + phrase.key,
+            textContainsPhrase(introText, phrase.text),
+            phrase.text
+          );
+          assert(
+            "disclaimer_result_" + phrase.key,
+            textContainsPhrase(resultText, phrase.text),
+            phrase.text
+          );
+        });
+
+        return fetchReadmeForDisclaimerTests().then(function (readme) {
+          if (readme.skipped) {
+            assert(
+              "disclaimer_readme_loaded",
+              true,
+              "skipped: " + readme.reason
+            );
+          } else {
+            assert(
+              "disclaimer_readme_loaded",
+              readme.loaded,
+              readme.loaded ? "README.md fetched" : readme.reason
+            );
+            DISCLAIMER_PHRASES.forEach(function (phrase) {
+              assert(
+                "disclaimer_readme_" + phrase.key,
+                readme.loaded && textContainsPhrase(readme.text, phrase.text),
+                phrase.text
+              );
+            });
+          }
+
+          const failed = checks.filter(function (c) { return !c.pass; });
+          const summary = {
+            total: checks.length,
+            passed: checks.length - failed.length,
+            failed: failed.length,
+            checks: checks
+          };
+
+          console.log(
+            failed.length === 0
+              ? "ChildhoodRoleQuiz.runDisclaimerTests: ALL PASSED (" + summary.total + ")"
+              : "ChildhoodRoleQuiz.runDisclaimerTests: " + failed.length + " FAILED",
+            summary
+          );
+
+          if (showHtml) {
+            lastReportKind = "unit";
+            const rows = checks.map(function (c) {
               return (
                 '<tr class="assert-row ' + (c.pass ? "pass" : "fail") + '">' +
                   "<td>" + (c.pass ? "PASS" : "FAIL") + "</td>" +
@@ -2262,67 +2477,21 @@
                 "</tr>"
               );
             }).join("");
+            renderReport({
+              title: "Disclaimer tests",
+              subtitle: summary.passed + " passed · " + summary.failed + " failed · " + summary.total + " total",
+              failed: summary.failed,
+              heroLede: "Checks that the medical-advice disclaimer appears on the start screen, results screen, and README.md.",
+              unitTestsHtml:
+                "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+                  "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
+                  "<tbody>" + rows + "</tbody>" +
+                "</table></div>"
+            });
           }
 
-          function tableFor(list) {
-            if (!list.length) return "";
-            return (
-              "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
-                "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
-                "<tbody>" + rowsFor(list) + "</tbody>" +
-              "</table></div>"
-            );
-          }
-
-          const similar = results.filter(function (r) {
-            return r.name.indexOf("similar12_60") === 0 || r.name === "normalization_matches_across_lengths";
-          });
-          const scoring = results.filter(function (r) {
-            return r.name.indexOf("unanimous") === 0 ||
-              r.name.indexOf("challenge_questions_") === 0 ||
-              r.name === "majority_challenged" ||
-              r.name === "tie_break_first_max" ||
-              r.name === "rejects_short_array" ||
-              r.name === "short_deck_size" ||
-              r.name === "full_deck_size" ||
-              r.name === "lengths_multiple_of_roles";
-          });
-          const other = results.filter(function (r) {
-            return similar.indexOf(r) < 0 && scoring.indexOf(r) < 0;
-          });
-          const similarPassed = similar.filter(function (r) { return r.pass; }).length;
-          const mc = results.find(function (r) {
-            return r.name === "similar12_60_monte_carlo_winner_agreement";
-          });
-
-          lastReportKind = "unit";
-          renderReport({
-            title: "Scoring & 12↔60 similarity tests",
-            subtitle: summary.passed + " passed · " + summary.failed + " failed · " + summary.total + " total",
-            failed: summary.failed,
-            heroLede: "Unit scoring and 12↔60 similarity checks rendered below. Re-run anytime from the start screen.",
-            unitTestsHtml:
-              "<div class=\"test-summary\">" +
-                "<div class=\"test-stat\"><span class=\"num\">" + summary.total + "</span><span class=\"lbl\">Total</span></div>" +
-                "<div class=\"test-stat\"><span class=\"num\">" + summary.passed + "</span><span class=\"lbl\">Passed</span></div>" +
-                "<div class=\"test-stat\"><span class=\"num\">" + summary.failed + "</span><span class=\"lbl\">Failed</span></div>" +
-                "<div class=\"test-stat\"><span class=\"num\">" + similarPassed + "/" + similar.length + "</span><span class=\"lbl\">12↔60</span></div>" +
-              "</div>" +
-              "<p class=\"lede\">These checks confirm scoring math and that proportion-matched 12- and 60-question patterns produce similar normalized results.</p>" +
-              (mc
-                ? "<p class=\"report-meta\"><strong>Monte Carlo winner agreement:</strong> " + escapeHtml(mc.detail) + "</p>"
-                : "") +
-              "<h3 class=\"test-section-title\">Deck &amp; scoring</h3>" +
-              tableFor(scoring) +
-              "<h3 class=\"test-section-title\">12↔60 similarity</h3>" +
-              tableFor(similar) +
-              (other.length
-                ? "<h3 class=\"test-section-title\">Other</h3>" + tableFor(other)
-                : "")
-          });
-        }
-
-        return summary;
+          return summary;
+        });
       }
 
       /**
@@ -2478,6 +2647,7 @@
       window.ChildhoodRoleQuiz = {
         score: scoreAnswers,
         runTests: runTests,
+        runDisclaimerTests: runDisclaimerTests,
         runGrowthEdgeTests: runGrowthEdgeTests,
         runRandomTest: runRandomTest,
         startQuiz: startQuiz,
