@@ -1,0 +1,2538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Discover the childhood family role that still shapes how you show up in relationships and work." />
+  <title>Childhood Role Profile</title>
+  <style>
+    :root {
+      --bg-deep: #1a2e28;
+      --bg-mid: #243d35;
+      --bg-soft: #e8f0ec;
+      --surface: #f7faf8;
+      --ink: #14241f;
+      --ink-muted: #4a635a;
+      --accent: #c45c26;
+      --accent-soft: #f3e0d4;
+      --line: rgba(20, 36, 31, 0.12);
+      --ok: #2f6b55;
+      --shadow: 0 18px 50px rgba(20, 36, 31, 0.12);
+      --radius: 18px;
+      --font-display: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      --font-body: Candara, "Segoe UI", "Trebuchet MS", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #3d6b5c 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 0%, #8a4a2a 0%, transparent 45%),
+        linear-gradient(165deg, var(--bg-deep), var(--bg-mid) 40%, #2f4a40);
+      line-height: 1.55;
+    }
+
+    .shell {
+      width: min(760px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .hero {
+      padding: 2.4rem 2rem 1.8rem;
+      background:
+        linear-gradient(135deg, rgba(36, 61, 53, 0.06), transparent 50%),
+        var(--bg-soft);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 0.6rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 0.75rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 2.55rem);
+      line-height: 1.15;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .lede {
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 1.05rem;
+      max-width: 38rem;
+    }
+
+    .progress-wrap {
+      padding: 1rem 2rem 0;
+      background: var(--surface);
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.45rem;
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+    }
+
+    .progress-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(20, 36, 31, 0.08);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--ok), #4f9a7c);
+      border-radius: inherit;
+      transition: width 0.35s ease;
+    }
+
+    .stage {
+      padding: 1.5rem 2rem 2rem;
+    }
+
+    .hidden { display: none !important; }
+
+    .question-title {
+      margin: 0 0 1.1rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+      line-height: 1.3;
+    }
+
+    .options {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .option {
+      appearance: none;
+      width: 100%;
+      text-align: left;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 14px;
+      padding: 0.95rem 1.05rem;
+      font: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    }
+
+    .option:hover {
+      border-color: rgba(47, 107, 85, 0.45);
+      transform: translateY(-1px);
+    }
+
+    .option.selected {
+      border-color: var(--ok);
+      background: #e7f3ed;
+      box-shadow: inset 0 0 0 1px rgba(47, 107, 85, 0.25);
+    }
+
+    .nav-row {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: space-between;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 0.8rem 1.35rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn:not(:disabled):hover { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-muted);
+      border: 1.5px solid var(--line);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .btn-primary:hover { background: #a84c1d; }
+
+    .start-actions, .result-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .result-card {
+      padding: 0.25rem 0 0.5rem;
+    }
+
+    .result-kicker {
+      margin: 0 0 0.35rem;
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .result-title {
+      margin: 0 0 0.85rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      line-height: 1.15;
+    }
+
+    .result-summary {
+      margin: 0 0 1.4rem;
+      color: var(--ink-muted);
+      font-size: 1.05rem;
+    }
+
+    .belief {
+      margin: 0 0 1.5rem;
+      padding: 1rem 1.1rem;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+    }
+
+    .belief strong { display: block; margin-bottom: 0.25rem; }
+
+    .grid-2 {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+
+    .mini {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem 1.05rem;
+    }
+
+    .mini h3 {
+      margin: 0 0 0.55rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ok);
+    }
+
+    .mini ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--ink-muted);
+    }
+
+    .mini li + li { margin-top: 0.35rem; }
+
+    .challenge-block {
+      margin-top: 1.25rem;
+      padding: 1rem 1.05rem;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .challenge-block h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ok);
+    }
+
+    .challenge-lede {
+      margin: 0 0 0.9rem;
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+    }
+
+    .btn-challenge {
+      background: transparent;
+      color: var(--ok);
+      border: 1.5px solid rgba(47, 107, 85, 0.35);
+      border-radius: 999px;
+      padding: 0.65rem 1.15rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-challenge:hover {
+      transform: translateY(-1px);
+      background: #e7f3ed;
+      border-color: var(--ok);
+    }
+
+    .btn-challenge[aria-expanded="true"] {
+      background: #e7f3ed;
+      border-color: var(--ok);
+    }
+
+    .challenge-list {
+      margin: 1rem 0 0;
+      padding-left: 1.25rem;
+      color: var(--ink-muted);
+    }
+
+    .challenge-list li + li { margin-top: 0.55rem; }
+
+    .challenge-list li {
+      line-height: 1.45;
+    }
+
+    .scores {
+      margin-top: 1.5rem;
+    }
+
+    .scores h3 {
+      margin: 0 0 0.85rem;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 9.5rem 1fr 7.5rem;
+      gap: 0.65rem;
+      align-items: center;
+      margin-bottom: 0.55rem;
+      font-size: 0.92rem;
+    }
+
+    .score-label { color: var(--ink); }
+
+    .score-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(20, 36, 31, 0.08);
+      overflow: hidden;
+    }
+
+    .score-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2f6b55, #c45c26);
+      border-radius: inherit;
+      width: 0;
+      transition: width 0.6s ease;
+    }
+
+    .score-n {
+      text-align: right;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .disclaimer {
+      margin: 1.5rem 0 0;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+    }
+
+    .footer-note {
+      margin-top: 1.25rem;
+      text-align: center;
+      color: rgba(247, 250, 248, 0.72);
+      font-size: 0.85rem;
+    }
+
+    .report-badge {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .report-badge.pass {
+      background: #e7f3ed;
+      color: var(--ok);
+    }
+
+    .report-badge.fail {
+      background: #fdecea;
+      color: #a12828;
+    }
+
+    .report-meta {
+      margin: 0 0 1.1rem;
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+    }
+
+    .report-table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .report-table th,
+    .report-table td {
+      padding: 0.65rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .report-table th {
+      background: var(--bg-soft);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .report-table tr:last-child td { border-bottom: none; }
+
+    .report-summary-list {
+      margin: 0 0 1.25rem;
+      padding-left: 1.15rem;
+      color: var(--ink-muted);
+    }
+
+    .report-summary-list li + li { margin-top: 0.35rem; }
+
+    .assert-row.pass td:first-child { color: var(--ok); font-weight: 700; }
+    .assert-row.fail td:first-child { color: #a12828; font-weight: 700; }
+
+    .test-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+      gap: 0.75rem;
+      margin: 0 0 1.25rem;
+    }
+
+    .test-stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      text-align: center;
+    }
+
+    .test-stat .num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .test-stat .lbl {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .test-section-title {
+      margin: 1.35rem 0 0.65rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+    }
+
+    .report-table td:last-child {
+      word-break: break-word;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      max-width: 28rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel">
+      <header class="hero">
+        <p class="eyebrow">Self-insight quiz</p>
+        <h1 id="main-heading">Childhood Role Profile</h1>
+        <p class="lede" id="hero-lede">
+          Growing up, families often settle into unspoken roles. Those early patterns still
+          influence how you handle stress, conflict, care, and ambition. Choose a 12-question
+          quick profile or the full 60-question assessment (lengths divisible by six roles for
+          normalized scoring).
+        </p>
+      </header>
+
+      <div class="progress-wrap hidden" id="progress-wrap" aria-hidden="true">
+        <div class="progress-meta">
+          <span id="progress-label">Question 1 of 12</span>
+          <span id="answered-count">0 answered</span>
+        </div>
+        <div class="progress-bar" aria-hidden="true">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <main class="stage">
+        <section id="intro-view">
+          <p class="lede">
+            Pick the response that feels most true for childhood <em>and</em> for how you tend to
+            show up now. There are no wrong answers—only patterns worth noticing.
+          </p>
+          <div class="start-actions">
+            <button class="btn btn-primary" type="button" id="start-12-btn">12-question quiz</button>
+            <button class="btn btn-primary" type="button" id="start-60-btn">60-question quiz</button>
+            <button class="btn btn-ghost" type="button" id="unit-test-btn">Run scoring &amp; similarity tests</button>
+            <button class="btn btn-ghost" type="button" id="random-test-btn">Run automated random test</button>
+          </div>
+          <p class="disclaimer" style="margin-top:1rem">
+            Tests open an on-page report (no console needed): unit checks, 12↔60 similarity, and optional random runs.
+          </p>
+        </section>
+
+        <section id="quiz-view" class="hidden" aria-live="polite">
+          <h2 class="question-title" id="question-title"></h2>
+          <div class="options" id="options" role="radiogroup" aria-labelledby="question-title"></div>
+          <div class="nav-row">
+            <button class="btn btn-ghost" type="button" id="prev-btn">Back</button>
+            <button class="btn btn-primary" type="button" id="next-btn">Next</button>
+          </div>
+        </section>
+
+        <section id="result-view" class="hidden">
+          <article class="result-card">
+            <p class="result-kicker">Your primary role</p>
+            <h2 class="result-title" id="result-title"></h2>
+            <p class="result-summary" id="result-summary"></p>
+            <div class="belief" id="result-belief"></div>
+            <div class="grid-2">
+              <div class="mini">
+                <h3>Strengths</h3>
+                <ul id="result-strengths"></ul>
+              </div>
+              <div class="mini">
+                <h3>Growth edges</h3>
+                <ul id="result-edges"></ul>
+              </div>
+            </div>
+            <div class="challenge-block">
+              <h3>Growth-edge questions</h3>
+              <p class="challenge-lede">Ten challenging prompts tailored to this role—use them for journaling or conversation.</p>
+              <button class="btn-challenge" type="button" id="challenge-toggle-btn" aria-expanded="false" aria-controls="challenge-panel">
+                Show challenging questions
+              </button>
+              <ol id="challenge-panel" class="challenge-list hidden" hidden></ol>
+            </div>
+            <div class="scores">
+              <h3>Normalized role shares</h3>
+            <p class="disclaimer" style="margin-top:0;margin-bottom:0.85rem">Each bar is that role’s count ÷ quiz length (sums to 100%). Chance baseline with six roles is 16.7%.</p>
+              <div id="score-bars"></div>
+            </div>
+            <p class="disclaimer">
+              This is a reflective tool, not a clinical diagnosis. Use it as a starting point for
+              self-awareness and conversation.
+            </p>
+            <div class="result-actions">
+              <button class="btn btn-primary" type="button" id="retake-btn">Retake quiz</button>
+            </div>
+          </article>
+        </section>
+
+        <section id="report-view" class="hidden" aria-live="polite">
+          <article class="result-card">
+            <p class="result-kicker">Automated test report</p>
+            <h2 class="result-title" id="report-title">Random answer run</h2>
+            <p class="report-meta" id="report-status"></p>
+            <div id="report-body"></div>
+            <div class="result-actions">
+              <button class="btn btn-ghost" type="button" id="report-home-btn">Back to start</button>
+              <button class="btn btn-primary" type="button" id="report-rerun-btn">Run again</button>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+    <p class="footer-note">Works offline · No accounts · Data stays in your browser</p>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /**
+       * Scoring model: each option maps to one role id.
+       * Winner = highest tally across 12 answers (ties broken by first max).
+       */
+      const ROLES = {
+        perfect: {
+          id: "perfect",
+          name: "The Achiever",
+          summary:
+            "You learned early that excellence kept things steady. Competence became a safe place—and a hard habit to loosen. You bring drive, standards, and reliability; the stretch is letting messiness exist without treating it as failure.",
+          beliefOld: "I feel worthy when I am performing.",
+          beliefNew: "I am more than my latest win, grade, or polished moment.",
+          strengths: [
+            "Growth-minded and attentive in close relationships",
+            "Thoughtful planner and motivator among friends",
+            "Focused, goal-oriented, and strong under pressure at work"
+          ],
+          edges: [
+            "Shame spikes quickly after mistakes or couple friction",
+            "May dim your light—or compete—around other high performers",
+            "Identity can fuse too tightly with achievement"
+          ],
+          challengeQuestions: [
+            "Where do you still treat rest as something you must earn?",
+            "What would change if a “good enough” outcome counted as complete?",
+            "Whose approval are you still performing for—even when they are no longer watching?",
+            "When you make a mistake, what story about your worth kicks in first?",
+            "How do you compete with people you actually want to feel close to?",
+            "What part of you feels unsafe when you are not the most prepared person in the room?",
+            "Where have high standards become a way to avoid intimacy or vulnerability?",
+            "If success stopped defining you for a month, what loneliness or fear might surface?",
+            "When did you last ask for help before you had already fixed everything yourself?",
+            "What relationship would deepen if you let someone see an unfinished version of you?"
+          ]
+        },
+        easy: {
+          id: "easy",
+          name: "The Easygoing One",
+          summary:
+            "Your calm adaptability lowered the temperature at home. Flexibility and low-maintenance presence are gifts—yet they can hide needs until resentment or invisibility creeps in. Balance means staying agreeable without disappearing.",
+          beliefOld: "I feel loved when I accommodate everyone else.",
+          beliefNew: "Naming what I want can strengthen connection, not threaten it.",
+          strengths: [
+            "Partner feels seen, safe, and cared for",
+            "Go-with-the-flow energy that puts friends at ease",
+            "Team glue—fills gaps and shapeshifts when needed"
+          ],
+          edges: [
+            "Hard to share needs; fear of being “too much”",
+            "Can feel taken for granted in groups",
+            "Extra tasks pile on because you rarely push back"
+          ],
+          challengeQuestions: [
+            "What preference have you swallowed this week to keep the peace?",
+            "Where does “I’m fine with whatever” actually mean “I don’t trust my needs will matter”?",
+            "Who benefits most from how easy you are to be around—and what does that cost you?",
+            "When resentment shows up, what earlier unspoken “no” did you skip?",
+            "What would you ask for if you were sure it wouldn’t make you “too much”?",
+            "How do you disappear in groups even while smiling and agreeing?",
+            "Which tasks keep landing on you because you never name the overload?",
+            "If someone loved your honesty as much as your flexibility, what would you say first?",
+            "Where do you confuse being low-maintenance with being unworthy of care?",
+            "What boundary, spoken once clearly, would change the shape of a key relationship?"
+          ]
+        },
+        struggling: {
+          id: "struggling",
+          name: "The Challenged One",
+          summary:
+            "Your difficulties sometimes organized the family’s attention. Resilience, advocacy, and hard-won wisdom are real strengths. The ongoing work is believing you belong even when you are not in crisis—and standing up for yourself without shame.",
+          beliefOld: "I feel loved when I need things from people.",
+          beliefNew: "I can both receive support and offer it—need does not erase worth.",
+          strengths: [
+            "Invite partners into honest vulnerability",
+            "Deep empathy for friends who are hurting",
+            "Strong advocate for people navigating hard systems"
+          ],
+          edges: [
+            "Reciprocity can feel uneven when support needs are high",
+            "May feel set apart or isolated from peer groups",
+            "Tendency to assume you are “the problem” at work"
+          ],
+          challengeQuestions: [
+            "Do you feel more real—or more loved—when something is going wrong?",
+            "Where do you assume you are “the problem” before checking the facts?",
+            "What support do you ask for that you could also practice offering to yourself?",
+            "How does crisis organize attention in ways that calm connection never quite matches?",
+            "When you are doing well, what fear arises about becoming invisible?",
+            "Where might advocacy for others be easier than standing up for your own ordinary needs?",
+            "What would belonging look like on a day with no struggle to narrate?",
+            "How do you notice reciprocity tipping—and can you name it without shame?",
+            "Which identity built around hardship are you ready to loosen, even a little?",
+            "Who already sees your strength that you still refuse to believe?"
+          ]
+        },
+        peacemaker: {
+          id: "peacemaker",
+          name: "The Peacemaker",
+          summary:
+            "You became the referee—reading the room, mediating, and holding multiple truths. Diplomacy is a superpower; overusing it can mute your own anger and leave you stuck in the middle. You do not have to resolve every storm.",
+          beliefOld: "I feel loved when I diffuse tension.",
+          beliefNew: "Conflict is normal; it is not solely mine to fix.",
+          strengths: [
+            "Fair-minded and skilled at mutual problem-solving",
+            "Brings people together and helps everyone feel heard",
+            "Natural mediator when teams get stuck"
+          ],
+          edges: [
+            "Jumps in with unsolicited fixes",
+            "Gets caught between friends who are fighting",
+            "Becomes the workplace middle person by default"
+          ],
+          challengeQuestions: [
+            "Which conflict are you managing that was never yours to own?",
+            "What anger of yours gets translated into helpfulness before anyone hears it?",
+            "Where do you jump in to fix before anyone asked for a mediator?",
+            "What happens in your body when two people you love disagree—and you stay out of it?",
+            "Whose discomfort are you still treating as an emergency?",
+            "How does being “the fair one” keep you from taking a clear side for yourself?",
+            "Where have you become the workplace middle person by default—and what would declining cost?",
+            "What truth do you soften so thoroughly that it never lands?",
+            "If harmony were not your job, what desire or grievance would finally get airtime?",
+            "Can you let a relationship stay tense long enough for the other people to grow?"
+          ]
+        },
+        parentified: {
+          id: "parentified",
+          name: "The Young Caregiver",
+          summary:
+            "You grew up as the little adult—empathic, steady, and emotionally available to people older than you. Care is your language of love; the growth edge is letting others struggle productively and turning some of that nurture inward.",
+          beliefOld: "I feel loved when I am nurturing others.",
+          beliefNew: "The care I give others also belongs to me.",
+          strengths: [
+            "Deeply comforting and reliable as a partner",
+            "The friend people call when they need a shoulder",
+            "Natural mentor energy at work"
+          ],
+          edges: [
+            "Hard to stop rescuing so others can grow",
+            "Advice can land as condescending even when caring",
+            "May placate volatile authority figures at personal cost"
+          ],
+          challengeQuestions: [
+            "Where are you still the “little adult” in rooms that no longer require it?",
+            "Whose emotional weather do you monitor before checking your own?",
+            "What would happen if you let someone struggle without rescuing them?",
+            "When did care become the only reliable way you knew how to belong?",
+            "Where does your advice land as control, even when your intent is love?",
+            "What do you need that you routinely give away to others first?",
+            "Which volatile person still gets placated at the cost of your nervous system?",
+            "How would your relationships change if receiving felt as natural as giving?",
+            "What part of you believes you are only valuable when someone needs you?",
+            "If nurture turned inward for a week, what neglected need would speak first?"
+          ]
+        },
+        rebel: {
+          id: "rebel",
+          name: "The Independent One",
+          summary:
+            "You said what others would not and took paths that kept you distinct. Courage and candor push systems forward; the cost can be loneliness or constant opposition. Connection does not require abandoning your edge.",
+          beliefOld: "I feel loved when I stand out.",
+          beliefNew: "I can belong without performing difference to feel safe.",
+          strengths: [
+            "Inspires partners to think bigger and choose boldly",
+            "Friends value your challenging, expansive conversations",
+            "Names problems clearly and moves teams toward solutions"
+          ],
+          edges: [
+            "Default disagreement can undermine “same team” moments",
+            "Hard to blend into groups or soften sharp opinions",
+            "Hierarchy and conformity at work can feel stifling"
+          ],
+          challengeQuestions: [
+            "Where do you default to disagreement even when you partly agree?",
+            "What closeness feels threatening because it might dilute your distinctiveness?",
+            "When is standing apart a strategy—and when is it a shield?",
+            "Whose “same team” moment have you undermined by needing to be the contrary voice?",
+            "What would it cost you to blend in for an evening without losing yourself?",
+            "Where does hierarchy trigger you beyond what the actual power dynamics require?",
+            "How do you perform difference to feel safe when belonging might actually be available?",
+            "Which sharp opinion could soften without becoming dishonest?",
+            "Who have you kept at arm’s length because intimacy felt like conformity?",
+            "If you did not have to stand out to matter, what quieter form of courage would you try?"
+          ]
+        }
+      };
+
+      const ROLE_ORDER = ["perfect", "easy", "struggling", "peacemaker", "parentified", "rebel"];
+
+      // Full item bank: prompt + 6 options; role = scoring target for that option.
+      const QUESTION_BANK = [
+        {
+          prompt: "When something goes wrong at work, my first instinct is to…",
+          options: [
+            { text: "Fix it perfectly before anyone notices the mistake.", role: "perfect" },
+            { text: "Downplay it and adapt so I don’t make waves.", role: "easy" },
+            { text: "Worry that this proves I’m the weak link.", role: "struggling" },
+            { text: "Smooth things over so the team doesn’t fracture.", role: "peacemaker" },
+            { text: "Check on everyone else’s feelings about it.", role: "parentified" },
+            { text: "Name what actually went wrong, even if it’s unpopular.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If a friend cancels plans last minute, I usually…",
+          options: [
+            { text: "Say it’s totally fine—even if I’m disappointed.", role: "easy" },
+            { text: "Offer to reschedule in a way that keeps everyone happy.", role: "peacemaker" },
+            { text: "Be honest that flaky plans bother me.", role: "rebel" },
+            { text: "Feel oddly unsettled that the day didn’t go as planned.", role: "perfect" },
+            { text: "Wonder if I did something to push them away.", role: "struggling" },
+            { text: "Ask if they’re okay and whether they need support.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "In a group project, the role I slip into is…",
+          options: [
+            { text: "Carrying more stress than others seem to notice.", role: "struggling" },
+            { text: "Challenging the plan if it feels wrong.", role: "rebel" },
+            { text: "Raising the standard and polishing the final product.", role: "perfect" },
+            { text: "Agreeing with whatever direction the group chooses.", role: "easy" },
+            { text: "Keeping personalities from clashing.", role: "peacemaker" },
+            { text: "Making sure quieter people feel looked after.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "When I feel anxious, I tend to…",
+          options: [
+            { text: "Scan the room for tension I can resolve.", role: "peacemaker" },
+            { text: "Minimize my needs so I don’t burden anyone.", role: "easy" },
+            { text: "Push back against whatever feels constraining.", role: "rebel" },
+            { text: "Double down on productivity to regain control.", role: "perfect" },
+            { text: "Get stuck in “something is wrong with me.”", role: "struggling" },
+            { text: "Care for someone else to settle myself.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "Praise that lands best for me sounds like…",
+          options: [
+            { text: "“You always know how to take care of people.”", role: "parentified" },
+            { text: "“You really help people get along.”", role: "peacemaker" },
+            { text: "“You’ve been through a lot and you’re still here.”", role: "struggling" },
+            { text: "“You’re so easy to be around.”", role: "easy" },
+            { text: "“You nailed it—this is excellent work.”", role: "perfect" },
+            { text: "“You say what others won’t.”", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "My hardest boundary to set is…",
+          options: [
+            { text: "Going along when I disagree.", role: "rebel" },
+            { text: "Allowing unfinished or imperfect work to stand.", role: "perfect" },
+            { text: "Saying no when someone asks a favor.", role: "easy" },
+            { text: "Asking for support without feeling ashamed.", role: "struggling" },
+            { text: "Staying out of other people’s conflicts.", role: "peacemaker" },
+            { text: "Letting someone struggle without intervening.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "Growing up, conflict in the house made me…",
+          options: [
+            { text: "Retreat into achievement where things felt controllable.", role: "perfect" },
+            { text: "Become the focus of worry or frustration.", role: "struggling" },
+            { text: "Comfort the adults or younger kids.", role: "parentified" },
+            { text: "Stay pleasant and invisible.", role: "easy" },
+            { text: "Jump in as the translator or referee.", role: "peacemaker" },
+            { text: "Refuse the family “script” and push back.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If my partner is upset with me, I most often…",
+          options: [
+            { text: "Apologize quickly to restore calm.", role: "easy" },
+            { text: "Focus on soothing their feelings first.", role: "parentified" },
+            { text: "Try to correct whatever I did wrong immediately.", role: "perfect" },
+            { text: "Spiral into self-blame and fear of rejection.", role: "struggling" },
+            { text: "Negotiate both sides until peace returns.", role: "peacemaker" },
+            { text: "Defend my truth even if it prolongs the fight.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "People rely on me for…",
+          options: [
+            { text: "Honesty about how hard things can be.", role: "struggling" },
+            { text: "High standards and getting things done right.", role: "perfect" },
+            { text: "Emotional support and practical caretaking.", role: "parentified" },
+            { text: "Flexibility and low drama.", role: "easy" },
+            { text: "Diplomacy when relationships get tense.", role: "peacemaker" },
+            { text: "Calling out unfairness or nonsense.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "A thought that shows up under pressure is…",
+          options: [
+            { text: "“I have to hold this together.”", role: "peacemaker" },
+            { text: "“I’m probably the problem again.”", role: "struggling" },
+            { text: "“Don’t make this about me.”", role: "easy" },
+            { text: "“I can’t drop the ball.”", role: "perfect" },
+            { text: "“I won’t pretend this is fine.”", role: "rebel" },
+            { text: "“They need me—I can’t step back.”", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "When plans change suddenly, I…",
+          options: [
+            { text: "Make sure others are comfortable with the new plan.", role: "parentified" },
+            { text: "Question why the change was needed.", role: "rebel" },
+            { text: "Feel thrown; I like a clear successful path.", role: "perfect" },
+            { text: "Adjust instantly and rarely protest.", role: "easy" },
+            { text: "Interpret the change as instability aimed at me.", role: "struggling" },
+            { text: "Help everyone renegotiate smoothly.", role: "peacemaker" }
+          ]
+        },
+        {
+          prompt: "In friendships, I feel most myself when I…",
+          options: [
+            { text: "Can be blunt and still belong.", role: "rebel" },
+            { text: "Don’t have to assert preferences.", role: "easy" },
+            { text: "Help friends reconcile after friction.", role: "peacemaker" },
+            { text: "Can contribute something impressive or useful.", role: "perfect" },
+            { text: "Can talk openly about my hard seasons.", role: "struggling" },
+            { text: "Am the person friends lean on.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "If I make a visible mistake, I feel…",
+          options: [
+            { text: "Exposed—like my whole competence is on trial.", role: "perfect" },
+            { text: "Worried I’ve created tension for others.", role: "peacemaker" },
+            { text: "Eager to laugh it off and move on.", role: "easy" },
+            { text: "Confirmed in a familiar “I mess things up” story.", role: "struggling" },
+            { text: "Responsible for cleaning up everyone’s feelings about it.", role: "parentified" },
+            { text: "Annoyed if people overreact to one human error.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "My style of loyalty looks like…",
+          options: [
+            { text: "Being available and undemanding.", role: "easy" },
+            { text: "Honesty, even when loyalty means hard truths.", role: "rebel" },
+            { text: "Protecting the relationship from rupture.", role: "peacemaker" },
+            { text: "Showing up consistently with excellence.", role: "perfect" },
+            { text: "Staying even when things are messy for me.", role: "struggling" },
+            { text: "Anticipating needs before they’re spoken.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "When someone asks what I want for dinner, I…",
+          options: [
+            { text: "Worry my preference will be inconvenient.", role: "struggling" },
+            { text: "Say “anything is fine” and mean it (or pretend to).", role: "easy" },
+            { text: "Suggest something thoughtful that will go well.", role: "perfect" },
+            { text: "State my preference clearly, even if it’s odd.", role: "rebel" },
+            { text: "Ask what everyone else needs first.", role: "parentified" },
+            { text: "Try to pick what works for the whole group.", role: "peacemaker" }
+          ]
+        },
+        {
+          prompt: "A childhood report card on me might have said…",
+          options: [
+            { text: "“Helpful with peers; calms the class.”", role: "peacemaker" },
+            { text: "“Mature; looks after others.”", role: "parentified" },
+            { text: "“Independent thinker; challenges authority.”", role: "rebel" },
+            { text: "“Exceptional—holds themselves to a high bar.”", role: "perfect" },
+            { text: "“Pleasant, cooperative, no trouble.”", role: "easy" },
+            { text: "“Needs support; has a hard time.”", role: "struggling" }
+          ]
+        },
+        {
+          prompt: "Rest is hard for me because…",
+          options: [
+            { text: "Someone might need caretaking.", role: "parentified" },
+            { text: "Idle time feels like falling behind.", role: "perfect" },
+            { text: "Quiet brings up painful thoughts.", role: "struggling" },
+            { text: "I don’t always know what I want to do for myself.", role: "easy" },
+            { text: "Someone might need me to keep the peace.", role: "peacemaker" },
+            { text: "Stillness can feel like giving in.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If two coworkers argue, I…",
+          options: [
+            { text: "Say the awkward truth about what’s really happening.", role: "rebel" },
+            { text: "Feel the tension in my body as if I’m involved.", role: "struggling" },
+            { text: "Want a clean process so work quality isn’t hurt.", role: "perfect" },
+            { text: "Stay out of it and keep things light.", role: "easy" },
+            { text: "Naturally start mediating.", role: "peacemaker" },
+            { text: "Check in with each person privately to soothe them.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "I feel loved most when someone…",
+          options: [
+            { text: "Respects my effort and celebrates a win with me.", role: "perfect" },
+            { text: "Lets me care for them—and sometimes cares back.", role: "parentified" },
+            { text: "Stays present with my hard feelings.", role: "struggling" },
+            { text: "Doesn’t ask me to be intense or demanding.", role: "easy" },
+            { text: "Values harmony with me without drama.", role: "peacemaker" },
+            { text: "Accepts my difference without trying to sand it down.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "My go-to way to feel safe is…",
+          options: [
+            { text: "Not needing much from anyone.", role: "easy" },
+            { text: "Performing well enough that I’m beyond criticism.", role: "perfect" },
+            { text: "Keeping enough independence that I can’t be controlled.", role: "rebel" },
+            { text: "Being indispensable to the people I love.", role: "parentified" },
+            { text: "Making sure no one is upset with anyone.", role: "peacemaker" },
+            { text: "Knowing someone will help if I fall apart.", role: "struggling" }
+          ]
+        },
+        {
+          prompt: "When receiving care from others, I…",
+          options: [
+            { text: "Want it deeply but fear I’m too much.", role: "struggling" },
+            { text: "Worry that accepting care creates imbalance.", role: "peacemaker" },
+            { text: "Redirect and start caring for them instead.", role: "parentified" },
+            { text: "Accept it only if it doesn’t feel like strings attached.", role: "rebel" },
+            { text: "Feel I should earn it by being impressive first.", role: "perfect" },
+            { text: "Feel awkward and try not to need it.", role: "easy" }
+          ]
+        },
+        {
+          prompt: "A meeting that runs off the rails makes me…",
+          options: [
+            { text: "Try to realign people toward agreement.", role: "peacemaker" },
+            { text: "Interrupt to say this isn’t working.", role: "rebel" },
+            { text: "Quietly go along until it’s over.", role: "easy" },
+            { text: "Frustrated that excellence is being wasted.", role: "perfect" },
+            { text: "Anxious that chaos will somehow become my fault.", role: "struggling" },
+            { text: "Attend to who’s uncomfortable.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "If I had to name my “job” in the family, it was…",
+          options: [
+            { text: "Be the helper / little adult.", role: "parentified" },
+            { text: "Be the easy one who didn’t add stress.", role: "easy" },
+            { text: "Be the success story.", role: "perfect" },
+            { text: "Be the one everyone worried about.", role: "struggling" },
+            { text: "Be the glue / referee.", role: "peacemaker" },
+            { text: "Be the one who wouldn’t play along.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "When I’m angry, I typically…",
+          options: [
+            { text: "Express it directly, sometimes sharply.", role: "rebel" },
+            { text: "Convert it into problem-solving for everyone.", role: "peacemaker" },
+            { text: "Swallow it and stay agreeable.", role: "easy" },
+            { text: "Channel it into fixing or overperforming.", role: "perfect" },
+            { text: "Turn it inward as shame or despair.", role: "struggling" },
+            { text: "Focus on whether others are okay.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "Success without recognition feels…",
+          options: [
+            { text: "Hollow—I needed the proof I did it right.", role: "perfect" },
+            { text: "Fine if I stayed true to myself.", role: "rebel" },
+            { text: "Less important than whether people were cared for.", role: "parentified" },
+            { text: "Secondary to whether relationships stayed intact.", role: "peacemaker" },
+            { text: "Suspicious—like it won’t last.", role: "struggling" },
+            { text: "Fine; attention can feel like pressure anyway.", role: "easy" }
+          ]
+        },
+        {
+          prompt: "In a crisis, others would say I…",
+          options: [
+            { text: "Stay calm and flexible.", role: "easy" },
+            { text: "Feel it intensely and need support.", role: "struggling" },
+            { text: "Keep people communicating.", role: "peacemaker" },
+            { text: "Make sure everyone’s emotional needs are met.", role: "parentified" },
+            { text: "Refuse sugarcoating and face reality.", role: "rebel" },
+            { text: "Take charge and execute.", role: "perfect" }
+          ]
+        },
+        {
+          prompt: "My social battery drains fastest when…",
+          options: [
+            { text: "I feel scrutinized as “the difficult one.”", role: "struggling" },
+            { text: "I’m caregiving with no reciprocity.", role: "parentified" },
+            { text: "I have to perform competence nonstop.", role: "perfect" },
+            { text: "I’m forced to state strong preferences repeatedly.", role: "easy" },
+            { text: "I’m stuck managing everyone else’s conflict.", role: "peacemaker" },
+            { text: "I’m expected to conform and smile about it.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If a rule feels pointless, I…",
+          options: [
+            { text: "Look for a compromise everyone can live with.", role: "peacemaker" },
+            { text: "Follow it anyway to stay above reproach.", role: "perfect" },
+            { text: "Comply quietly to avoid friction.", role: "easy" },
+            { text: "Worry breaking it will confirm I’m a problem.", role: "struggling" },
+            { text: "Help others navigate the rule gently.", role: "parentified" },
+            { text: "Challenge or bend it.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "When someone cries in front of me, I…",
+          options: [
+            { text: "Move in close with comfort and caretaking.", role: "parentified" },
+            { text: "Feel their pain as if it’s contagious.", role: "struggling" },
+            { text: "Want a clear plan to make it better.", role: "perfect" },
+            { text: "Offer space and try not to intensify anything.", role: "easy" },
+            { text: "Help them talk it through toward resolution.", role: "peacemaker" },
+            { text: "Stay present but refuse empty platitudes.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "I judge a good day by whether…",
+          options: [
+            { text: "I stayed authentic to myself.", role: "rebel" },
+            { text: "The people I love felt supported.", role: "parentified" },
+            { text: "No major relational ruptures happened.", role: "peacemaker" },
+            { text: "I got through without feeling overwhelmed.", role: "struggling" },
+            { text: "I kept things light and didn’t cause trouble.", role: "easy" },
+            { text: "I accomplished something I can be proud of.", role: "perfect" }
+          ]
+        },
+        {
+          prompt: "Around authority figures, I tend to…",
+          options: [
+            { text: "Impress them with competence.", role: "perfect" },
+            { text: "Stay agreeable and low-maintenance.", role: "easy" },
+            { text: "Feel evaluated and easily shamed.", role: "struggling" },
+            { text: "Read the dynamics and keep peace.", role: "peacemaker" },
+            { text: "Anticipate what they need emotionally.", role: "parentified" },
+            { text: "Keep a skeptical, independent stance.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If I disappear from a group chat, it’s usually because…",
+          options: [
+            { text: "I don’t want to demand attention.", role: "easy" },
+            { text: "There’s conflict and I feel responsible to fix it first.", role: "peacemaker" },
+            { text: "The group vibe feels fake or constraining.", role: "rebel" },
+            { text: "I’m buried in tasks and standards I set for myself.", role: "perfect" },
+            { text: "I’m in a hard spell and feel like a burden.", role: "struggling" },
+            { text: "I’ve been pouring into others and hit empty.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "My inner critic’s favorite line is…",
+          options: [
+            { text: "“You’re too much / not enough.”", role: "struggling" },
+            { text: "“Fitting in means selling out.”", role: "rebel" },
+            { text: "“That wasn’t good enough.”", role: "perfect" },
+            { text: "“Don’t be difficult.”", role: "easy" },
+            { text: "“If they’re upset, you failed.”", role: "peacemaker" },
+            { text: "“You should have taken better care of them.”", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "When making a big life decision, I prioritize…",
+          options: [
+            { text: "Which path keeps important relationships stable.", role: "peacemaker" },
+            { text: "Which path creates the least conflict.", role: "easy" },
+            { text: "Which path protects my autonomy.", role: "rebel" },
+            { text: "Which path lets me excel and look capable.", role: "perfect" },
+            { text: "Which path feels survivable for me emotionally.", role: "struggling" },
+            { text: "Which path lets me keep supporting others.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "If I sense someone is disappointed in me, I…",
+          options: [
+            { text: "Offer caretaking to win back warmth.", role: "parentified" },
+            { text: "Open a repair conversation immediately.", role: "peacemaker" },
+            { text: "Collapse into “I’ve ruined it.”", role: "struggling" },
+            { text: "Soft-pedal myself and accommodate.", role: "easy" },
+            { text: "Work harder to restore my image.", role: "perfect" },
+            { text: "Ask whether their disappointment is fair.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "Holidays with family leave me…",
+          options: [
+            { text: "Needing distance from the old roles.", role: "rebel" },
+            { text: "Performing the “doing well” version of myself.", role: "perfect" },
+            { text: "Keeping the mood easy at my own expense.", role: "easy" },
+            { text: "Reactivating old pain or being treated as fragile.", role: "struggling" },
+            { text: "Managing tensions between relatives.", role: "peacemaker" },
+            { text: "Hosting, helping, and emotional laboring.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "I feel most ashamed when I…",
+          options: [
+            { text: "Fall short of a standard I set.", role: "perfect" },
+            { text: "Need help publicly.", role: "struggling" },
+            { text: "Put myself first and someone suffers.", role: "parentified" },
+            { text: "Take up space with a strong need.", role: "easy" },
+            { text: "Can’t stop a fight between people I love.", role: "peacemaker" },
+            { text: "Catch myself conforming just to be liked.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "In dating, a red flag for me is someone who…",
+          options: [
+            { text: "Pressures me to decide / assert constantly.", role: "easy" },
+            { text: "Only takes and never reciprocates care.", role: "parentified" },
+            { text: "Doesn’t respect ambition or follow-through.", role: "perfect" },
+            { text: "Minimizes my struggles.", role: "struggling" },
+            { text: "Thrives on drama and perpetual conflict.", role: "peacemaker" },
+            { text: "Demands obedience or sameness.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "When I’m alone for a long weekend, I…",
+          options: [
+            { text: "Feel the loneliness of old survival patterns.", role: "struggling" },
+            { text: "Build a productive agenda so time isn’t “wasted.”", role: "perfect" },
+            { text: "Feel restless without someone to care for.", role: "parentified" },
+            { text: "Drift without advocating for a special plan.", role: "easy" },
+            { text: "Notice the absence of people to mediate for.", role: "peacemaker" },
+            { text: "Relish the freedom from others’ expectations.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "Feedback lands best when it…",
+          options: [
+            { text: "Focuses on relational impact without blame wars.", role: "peacemaker" },
+            { text: "Separates my worth from the struggle being named.", role: "struggling" },
+            { text: "Is gentle and doesn’t put me on the spot.", role: "easy" },
+            { text: "Is specific and helps me improve performance.", role: "perfect" },
+            { text: "Is honest and doesn’t tip-toe.", role: "rebel" },
+            { text: "Also acknowledges how much I give.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "If money got tight, my instinct would be to…",
+          options: [
+            { text: "Shield others from the stress financially/emotionally.", role: "parentified" },
+            { text: "Reject shame narratives about struggle.", role: "rebel" },
+            { text: "Create a rigorous plan and execute it.", role: "perfect" },
+            { text: "Not complain and make do quietly.", role: "easy" },
+            { text: "Feel marked by the hardship as identity.", role: "struggling" },
+            { text: "Reduce friction in the household about it.", role: "peacemaker" }
+          ]
+        },
+        {
+          prompt: "I know I’m slipping into my old role when I…",
+          options: [
+            { text: "Pick a fight mainly to feel separate.", role: "rebel" },
+            { text: "Agree out loud while resenting it inside.", role: "easy" },
+            { text: "Insert myself into a conflict that isn’t mine.", role: "peacemaker" },
+            { text: "Can’t tolerate being average for even a day.", role: "perfect" },
+            { text: "Assume I’m failing before facts are in.", role: "struggling" },
+            { text: "Over-function for adults who can cope themselves.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "What I want people to understand about me is…",
+          options: [
+            { text: "My drive comes from care, not vanity.", role: "perfect" },
+            { text: "I get tired of holding the emotional center.", role: "peacemaker" },
+            { text: "My quietness isn’t emptiness—I have needs too.", role: "easy" },
+            { text: "My challenges aren’t my whole identity.", role: "struggling" },
+            { text: "I need caretaking sometimes, not just to give it.", role: "parentified" },
+            { text: "My intensity is love of truth, not cruelty.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "When a team celebrates, I feel best if…",
+          options: [
+            { text: "I helped without becoming the center.", role: "easy" },
+            { text: "The celebration wasn’t performative nonsense.", role: "rebel" },
+            { text: "Nobody was left out or simmering.", role: "peacemaker" },
+            { text: "My contribution was excellent and noticed.", role: "perfect" },
+            { text: "I was included even in my imperfect seasons.", role: "struggling" },
+            { text: "Everyone felt emotionally held in the moment.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "My relationship to vulnerability is…",
+          options: [
+            { text: "Familiar—I’ve had to show need to survive.", role: "struggling" },
+            { text: "Confusing—I often can’t locate what I feel.", role: "easy" },
+            { text: "Risky—it can look like losing competence.", role: "perfect" },
+            { text: "Selective—I’ll be raw, but not controlled by it.", role: "rebel" },
+            { text: "One-way—I hold others’ vulnerability more than mine.", role: "parentified" },
+            { text: "Strategic—I share to de-escalate, not to be known.", role: "peacemaker" }
+          ]
+        },
+        {
+          prompt: "If I could rewrite one family rule, it would be…",
+          options: [
+            { text: "“Kids don’t have to manage adult conflict.”", role: "peacemaker" },
+            { text: "“Children shouldn’t parent the parents.”", role: "parentified" },
+            { text: "“Difference is not disloyalty.”", role: "rebel" },
+            { text: "“Worth isn’t measured by achievement.”", role: "perfect" },
+            { text: "“Your needs are allowed to take up room.”", role: "easy" },
+            { text: "“Struggle doesn’t make you the family problem.”", role: "struggling" }
+          ]
+        },
+        {
+          prompt: "At the end of an argument, I need…",
+          options: [
+            { text: "To know the other person feels cared for again.", role: "parentified" },
+            { text: "A clear resolution and restored competence.", role: "perfect" },
+            { text: "Proof I wasn’t abandoned for having needs.", role: "struggling" },
+            { text: "Reassurance that we’re still okay and easy with each other.", role: "easy" },
+            { text: "Evidence both sides felt heard.", role: "peacemaker" },
+            { text: "To know my perspective wasn’t erased.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "I feel most resentful when…",
+          options: [
+            { text: "I’m punished for being honest.", role: "rebel" },
+            { text: "I’m cast as dramatic for having real needs.", role: "struggling" },
+            { text: "My effort is treated as average or invisible.", role: "perfect" },
+            { text: "People assume I’ll always accommodate.", role: "easy" },
+            { text: "I’m expected to fix every relational mess.", role: "peacemaker" },
+            { text: "I’m only valued for what I give.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "A growth edge I’m practicing is…",
+          options: [
+            { text: "Letting “good enough” be enough sometimes.", role: "perfect" },
+            { text: "Receiving help without immediately reciprocating.", role: "parentified" },
+            { text: "Believing I’m worthy outside of crisis.", role: "struggling" },
+            { text: "Naming a preference without apologizing.", role: "easy" },
+            { text: "Tolerating conflict that isn’t mine to solve.", role: "peacemaker" },
+            { text: "Staying connected without losing myself.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "If my life had a subtitle right now, it might be…",
+          options: [
+            { text: "“Keeping it light so no one worries.”", role: "easy" },
+            { text: "“Proving I can hold it together.”", role: "perfect" },
+            { text: "“Doing it my way, honestly.”", role: "rebel" },
+            { text: "“Taking care of everyone else.”", role: "parentified" },
+            { text: "“Holding the center so others don’t break.”", role: "peacemaker" },
+            { text: "“Surviving and still trying.”", role: "struggling" }
+          ]
+        },
+        {
+          prompt: "When I notice someone is struggling silently, I…",
+          options: [
+            { text: "Feel their pain sharply and fear I’m next.", role: "struggling" },
+            { text: "Try to ease tension around them in the group.", role: "peacemaker" },
+            { text: "Move in with caretaking before they ask.", role: "parentified" },
+            { text: "Ask a direct question that cuts through the silence.", role: "rebel" },
+            { text: "Offer a practical plan or high-quality resource.", role: "perfect" },
+            { text: "Stay available but wait so I don’t impose.", role: "easy" }
+          ]
+        },
+        {
+          prompt: "My relationship to ambition is…",
+          options: [
+            { text: "Secondary to keeping important bonds intact.", role: "peacemaker" },
+            { text: "Self-authored—I reject borrowed definitions of success.", role: "rebel" },
+            { text: "Soft—I pursue goals without making demands.", role: "easy" },
+            { text: "Central—ambition organizes my self-worth.", role: "perfect" },
+            { text: "Complicated—hard seasons keep resetting the bar.", role: "struggling" },
+            { text: "Often deferred so I can support others’ goals.", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "If I feel unseen in a relationship, I usually…",
+          options: [
+            { text: "Double down on caring until I’m noticed.", role: "parentified" },
+            { text: "Shrink further so I don’t seem needy.", role: "easy" },
+            { text: "Try to earn visibility through achievement.", role: "perfect" },
+            { text: "Interpret it as proof I’m hard to love.", role: "struggling" },
+            { text: "Smooth things over instead of naming the hurt.", role: "peacemaker" },
+            { text: "Call it out or create distance.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "In chaos, the story I tell myself is…",
+          options: [
+            { text: "“I won’t pretend this dysfunction is normal.”", role: "rebel" },
+            { text: "“Someone has to hold the middle.”", role: "peacemaker" },
+            { text: "“Don’t add to the noise—stay easy.”", role: "easy" },
+            { text: "“If I perform well enough, I can restore order.”", role: "perfect" },
+            { text: "“This always finds me.”", role: "struggling" },
+            { text: "“They need me more than ever.”", role: "parentified" }
+          ]
+        },
+        {
+          prompt: "When giving advice, I tend to…",
+          options: [
+            { text: "Aim for the smartest, highest-standard recommendation.", role: "perfect" },
+            { text: "Say the candid thing others avoid.", role: "rebel" },
+            { text: "Guide protectively, like a mentor-parent.", role: "parentified" },
+            { text: "Frame options that reduce interpersonal fallout.", role: "peacemaker" },
+            { text: "Share from lived hardship and survival wisdom.", role: "struggling" },
+            { text: "Soft-pedal so the other person never feels pushed.", role: "easy" }
+          ]
+        },
+        {
+          prompt: "A compliment that makes me uneasy is…",
+          options: [
+            { text: "Being called the “easygoing one” when I actually needed something.", role: "easy" },
+            { text: "Being labeled “resilient” when I just want rest.", role: "struggling" },
+            { text: "Being thanked for fixing a conflict I never wanted to own.", role: "peacemaker" },
+            { text: "Being valued only as the caretaker.", role: "parentified" },
+            { text: "Being admired for “fitting in.”", role: "rebel" },
+            { text: "Praise for effort when I know the result wasn’t excellent.", role: "perfect" }
+          ]
+        },
+        {
+          prompt: "If trust is broken, my repair style is…",
+          options: [
+            { text: "Need lots of reassurance before I feel safe again.", role: "struggling" },
+            { text: "Tend to their feelings first, then address mine.", role: "parentified" },
+            { text: "Demonstrate reliability through corrected performance.", role: "perfect" },
+            { text: "Forgive quickly to restore ease.", role: "easy" },
+            { text: "Facilitate a balanced conversation about both sides.", role: "peacemaker" },
+            { text: "Require honest accountability without sugarcoating.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "Around group silence after a tense moment, I…",
+          options: [
+            { text: "Break the silence with a bridging comment.", role: "peacemaker" },
+            { text: "Want a clear next step so we look competent again.", role: "perfect" },
+            { text: "Wait it out rather than intensify anything.", role: "easy" },
+            { text: "Assume the tension somehow involves my fault.", role: "struggling" },
+            { text: "Check who looks hurt and comfort them.", role: "parentified" },
+            { text: "Name the awkward truth sitting in the room.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "My body knows I’m in my old role when…",
+          options: [
+            { text: "I feel responsible for everyone’s calm.", role: "parentified" },
+            { text: "My stomach drops into familiar dread.", role: "struggling" },
+            { text: "My shoulders lock into ‘must get this right.’", role: "perfect" },
+            { text: "My voice goes soft and my preferences vanish.", role: "easy" },
+            { text: "I feel pulled to stand between people.", role: "peacemaker" },
+            { text: "I brace to disagree before anyone speaks.", role: "rebel" }
+          ]
+        },
+        {
+          prompt: "The legacy I most want to leave in relationships is…",
+          options: [
+            { text: "That honesty made real connection possible.", role: "rebel" },
+            { text: "That people felt deeply cared for.", role: "parentified" },
+            { text: "That conflict can end in understanding.", role: "peacemaker" },
+            { text: "That hardship can coexist with dignity and love.", role: "struggling" },
+            { text: "That I made rooms feel safer and lighter.", role: "easy" },
+            { text: "That I helped people reach their potential.", role: "perfect" }
+          ]
+        }
+      ];
+
+      // Curated short form (12 = 2×6 roles): stress, boundaries, family, conflict, growth, repair.
+      const SHORT_INDICES = [0, 3, 5, 6, 7, 9, 15, 22, 35, 48, 52, 58];
+      const QUIZ_LENGTHS = [12, 60];
+      const ROLE_COUNT = ROLE_ORDER.length; // 6 — lengths are multiples for balanced normalization
+
+      function buildDeck(length) {
+        if (length === 12) {
+          return SHORT_INDICES.map(function (i) { return QUESTION_BANK[i]; });
+        }
+        return QUESTION_BANK.slice();
+      }
+
+      /** Raw tallies → proportions that sum to 1 (comparable across 12 vs 60). */
+      function normalizeScores(scores, n) {
+        const normalized = {};
+        ROLE_ORDER.forEach(function (id) {
+          normalized[id] = n > 0 ? scores[id] / n : 0;
+        });
+        return normalized;
+      }
+
+      function chanceBaseline() {
+        return 1 / ROLE_COUNT;
+      }
+
+      const state = {
+        index: 0,
+        length: 60,
+        deck: buildDeck(60),
+        answers: Array(60).fill(null)
+      };
+
+      function activeQuestions() {
+        return state.deck;
+      }
+
+      const els = {
+        intro: document.getElementById("intro-view"),
+        quiz: document.getElementById("quiz-view"),
+        result: document.getElementById("result-view"),
+        report: document.getElementById("report-view"),
+        progressWrap: document.getElementById("progress-wrap"),
+        progressLabel: document.getElementById("progress-label"),
+        answeredCount: document.getElementById("answered-count"),
+        progressFill: document.getElementById("progress-fill"),
+        questionTitle: document.getElementById("question-title"),
+        options: document.getElementById("options"),
+        prevBtn: document.getElementById("prev-btn"),
+        nextBtn: document.getElementById("next-btn"),
+        start12Btn: document.getElementById("start-12-btn"),
+        start60Btn: document.getElementById("start-60-btn"),
+        unitTestBtn: document.getElementById("unit-test-btn"),
+        randomTestBtn: document.getElementById("random-test-btn"),
+        retakeBtn: document.getElementById("retake-btn"),
+        reportHomeBtn: document.getElementById("report-home-btn"),
+        reportRerunBtn: document.getElementById("report-rerun-btn"),
+        reportTitle: document.getElementById("report-title"),
+        reportStatus: document.getElementById("report-status"),
+        reportBody: document.getElementById("report-body"),
+        resultTitle: document.getElementById("result-title"),
+        resultSummary: document.getElementById("result-summary"),
+        resultBelief: document.getElementById("result-belief"),
+        resultStrengths: document.getElementById("result-strengths"),
+        resultEdges: document.getElementById("result-edges"),
+        challengeToggleBtn: document.getElementById("challenge-toggle-btn"),
+        challengePanel: document.getElementById("challenge-panel"),
+        scoreBars: document.getElementById("score-bars"),
+        heading: document.getElementById("main-heading"),
+        heroLede: document.getElementById("hero-lede")
+      };
+
+      let lastRandomRuns = 1;
+      let lastReportKind = "unit"; // "unit" | "random"
+
+      function answeredTotal() {
+        return state.answers.filter(function (a) { return a !== null; }).length;
+      }
+
+      function updateProgress() {
+        const n = activeQuestions().length;
+        const current = state.index + 1;
+        els.progressLabel.textContent = "Question " + current + " of " + n;
+        els.answeredCount.textContent = answeredTotal() + " answered";
+        els.progressFill.style.width = ((current / n) * 100) + "%";
+      }
+
+      function showView(name) {
+        els.intro.classList.toggle("hidden", name !== "intro");
+        els.quiz.classList.toggle("hidden", name !== "quiz");
+        els.result.classList.toggle("hidden", name !== "result");
+        els.report.classList.toggle("hidden", name !== "report");
+        els.progressWrap.classList.toggle("hidden", name !== "quiz");
+        els.progressWrap.setAttribute("aria-hidden", name !== "quiz" ? "true" : "false");
+      }
+
+      function setChallengeOpen(open) {
+        els.challengePanel.classList.toggle("hidden", !open);
+        if (open) {
+          els.challengePanel.removeAttribute("hidden");
+        } else {
+          els.challengePanel.setAttribute("hidden", "");
+        }
+        els.challengeToggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        els.challengeToggleBtn.textContent = open
+          ? "Hide challenging questions"
+          : "Show challenging questions";
+      }
+
+      function goHome() {
+        els.heading.textContent = "Childhood Role Profile";
+        els.heroLede.textContent =
+          "Growing up, families often settle into unspoken roles. Those early patterns still influence how you handle stress, conflict, care, and ambition. Choose a 12-question quick profile or the full 60-question assessment.";
+        showView("intro");
+      }
+
+      function renderQuestion() {
+        const q = activeQuestions()[state.index];
+        const selected = state.answers[state.index];
+        els.questionTitle.textContent = q.prompt;
+        els.options.innerHTML = "";
+
+        q.options.forEach(function (opt, i) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "option" + (selected === i ? " selected" : "");
+          btn.setAttribute("role", "radio");
+          btn.setAttribute("aria-checked", selected === i ? "true" : "false");
+          btn.textContent = opt.text;
+          btn.addEventListener("click", function () {
+            state.answers[state.index] = i;
+            renderQuestion();
+            updateProgress();
+          });
+          els.options.appendChild(btn);
+        });
+
+        els.prevBtn.disabled = state.index === 0;
+        const isLast = state.index === activeQuestions().length - 1;
+        els.nextBtn.textContent = isLast ? "See my profile" : "Next";
+        els.nextBtn.disabled = state.answers[state.index] === null;
+        updateProgress();
+      }
+
+      function tallyScores(deck) {
+        const questions = deck || activeQuestions();
+        const scores = {};
+        ROLE_ORDER.forEach(function (id) { scores[id] = 0; });
+        state.answers.forEach(function (optIndex, qIndex) {
+          if (optIndex === null) return;
+          const role = questions[qIndex].options[optIndex].role;
+          scores[role] += 1;
+        });
+        return scores;
+      }
+
+      function pickWinner(scores) {
+        let bestId = ROLE_ORDER[0];
+        let bestVal = -1;
+        ROLE_ORDER.forEach(function (id) {
+          if (scores[id] > bestVal) {
+            bestVal = scores[id];
+            bestId = id;
+          }
+        });
+        return bestId;
+      }
+
+      function renderResult() {
+        const scores = tallyScores();
+        const winnerId = pickWinner(scores);
+        const role = ROLES[winnerId];
+        const max = activeQuestions().length;
+
+        els.heading.textContent = "Your profile";
+        els.heroLede.textContent =
+          "Based on your " + activeQuestions().length + " answers, here is the childhood role pattern that fits you most closely—and how it may still show up today.";
+
+        els.resultTitle.textContent = role.name;
+        els.resultSummary.textContent = role.summary;
+        els.resultBelief.innerHTML =
+          "<strong>Old story:</strong> " + role.beliefOld +
+          "<br /><strong>Healthier reframe:</strong> " + role.beliefNew;
+
+        els.resultStrengths.innerHTML = role.strengths
+          .map(function (s) { return "<li>" + s + "</li>"; })
+          .join("");
+        els.resultEdges.innerHTML = role.edges
+          .map(function (s) { return "<li>" + s + "</li>"; })
+          .join("");
+
+        els.challengePanel.innerHTML = (role.challengeQuestions || [])
+          .map(function (q) { return "<li>" + q + "</li>"; })
+          .join("");
+        setChallengeOpen(false);
+
+        const normalized = normalizeScores(scores, max);
+        const baseline = chanceBaseline();
+        els.scoreBars.innerHTML = ROLE_ORDER.map(function (id) {
+          const pct = Math.round(normalized[id] * 1000) / 10; // one decimal
+          const lift = (normalized[id] / baseline).toFixed(2);
+          return (
+            '<div class="score-row">' +
+              '<div class="score-label">' + ROLES[id].name.replace(/^The /, "") + "</div>" +
+              '<div class="score-track"><div class="score-fill" data-pct="' + pct + '"></div></div>' +
+              '<div class="score-n" title="Normalized share ' + pct + '% · ' + lift + '× chance baseline">' +
+                scores[id] + "/" + max + " (" + pct + "%)" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+
+        showView("result");
+        requestAnimationFrame(function () {
+          els.scoreBars.querySelectorAll(".score-fill").forEach(function (el) {
+            el.style.width = el.getAttribute("data-pct") + "%";
+          });
+        });
+      }
+
+      function startQuiz(length) {
+        const n = length === 12 ? 12 : 60;
+        state.length = n;
+        state.deck = buildDeck(n);
+        state.index = 0;
+        state.answers = Array(n).fill(null);
+        els.heading.textContent = n === 12 ? "Quick profile (12)" : "Full profile (60)";
+        els.heroLede.textContent =
+          n === 12
+            ? "Twelve items (2× six roles) with scores normalized as proportions for a quick read."
+            : "Sixty items (10× six roles) for a finer-grained, proportion-normalized profile.";
+        showView("quiz");
+        renderQuestion();
+      }
+
+      function scoreAnswers(answerIndexes, deck) {
+        const questions = deck || activeQuestions();
+        if (!Array.isArray(answerIndexes) || answerIndexes.length !== questions.length) {
+          throw new Error("Pass an array of " + questions.length + " option indexes (0-5).");
+        }
+        answerIndexes.forEach(function (optIndex, qIndex) {
+          if (typeof optIndex !== "number" || optIndex < 0 || optIndex > 5) {
+            throw new Error("Invalid option index at question " + (qIndex + 1) + ".");
+          }
+        });
+        const previous = state.answers.slice();
+        state.answers = answerIndexes.slice();
+        const scores = tallyScores(questions);
+        const winnerId = pickWinner(scores);
+        state.answers = previous;
+        const n = questions.length;
+        return {
+          scores: scores,
+          normalized: normalizeScores(scores, n),
+          n: n,
+          baseline: chanceBaseline(),
+          winnerId: winnerId,
+          winner: ROLES[winnerId].name
+        };
+      }
+
+      /** Indexes that pick a given role on every question in a deck. */
+      function allAnswersForRole(roleId, deck) {
+        const questions = deck || activeQuestions();
+        return questions.map(function (q) {
+          const idx = q.options.findIndex(function (opt) { return opt.role === roleId; });
+          if (idx < 0) throw new Error("No option for role: " + roleId);
+          return idx;
+        });
+      }
+
+      function randomAnswerSet(deck) {
+        const questions = deck || activeQuestions();
+        return questions.map(function () {
+          return Math.floor(Math.random() * 6);
+        });
+      }
+
+      function validateRun(answerIndexes, scored, deck) {
+        const questions = deck || activeQuestions();
+        const checks = [];
+        const total = ROLE_ORDER.reduce(function (sum, id) {
+          return sum + scored.scores[id];
+        }, 0);
+        checks.push({
+          name: "full_answer_set",
+          pass: answerIndexes.length === questions.length,
+          detail: "length=" + answerIndexes.length
+        });
+        checks.push({
+          name: "scores_sum_to_n",
+          pass: total === questions.length,
+          detail: "sum=" + total
+        });
+        const maxScore = Math.max.apply(null, ROLE_ORDER.map(function (id) {
+          return scored.scores[id];
+        }));
+        checks.push({
+          name: "winner_has_max_score",
+          pass: scored.scores[scored.winnerId] === maxScore,
+          detail: "winner=" + scored.winnerId + " max=" + maxScore
+        });
+        const firstMax = ROLE_ORDER.find(function (id) {
+          return scored.scores[id] === maxScore;
+        });
+        checks.push({
+          name: "tie_break_order",
+          pass: scored.winnerId === firstMax,
+          detail: "expected first max=" + firstMax
+        });
+        checks.push({
+          name: "each_pick_maps_to_role",
+          pass: answerIndexes.every(function (optIndex, qIndex) {
+            return !!questions[qIndex].options[optIndex].role;
+          }),
+          detail: "all options resolve"
+        });
+        return checks;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function buildDetailHtml(run) {
+        const rows = run.answerIndexes.map(function (optIndex, qIndex) {
+          const q = activeQuestions()[qIndex];
+          const opt = q.options[optIndex];
+          return (
+            "<tr>" +
+              "<td>" + (qIndex + 1) + "</td>" +
+              "<td>" + escapeHtml(q.prompt) + "</td>" +
+              "<td>" + escapeHtml(opt.text) + "</td>" +
+              "<td>" + escapeHtml(ROLES[opt.role].name) + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        const scoreRows = ROLE_ORDER.map(function (id) {
+          return (
+            "<tr>" +
+              "<td>" + escapeHtml(ROLES[id].name) + "</td>" +
+              "<td>" + run.scored.scores[id] + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        const assertRows = run.checks.map(function (c) {
+          return (
+            '<tr class="assert-row ' + (c.pass ? "pass" : "fail") + '">' +
+              "<td>" + (c.pass ? "PASS" : "FAIL") + "</td>" +
+              "<td>" + escapeHtml(c.name) + "</td>" +
+              "<td>" + escapeHtml(c.detail) + "</td>" +
+            "</tr>"
+          );
+        }).join("");
+
+        return (
+          "<p class=\"lede\"><strong>Winner:</strong> " + escapeHtml(run.scored.winner) + "</p>" +
+          "<h3 class=\"scores\" style=\"margin-top:1.25rem\">Chosen answers</h3>" +
+          "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+            "<thead><tr><th>#</th><th>Question</th><th>Random answer</th><th>Maps to</th></tr></thead>" +
+            "<tbody>" + rows + "</tbody>" +
+          "</table></div>" +
+          "<h3 class=\"scores\">Score totals</h3>" +
+          "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+            "<thead><tr><th>Role</th><th>Count</th></tr></thead>" +
+            "<tbody>" + scoreRows + "</tbody>" +
+          "</table></div>" +
+          "<h3 class=\"scores\">Assertions</h3>" +
+          "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+            "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
+            "<tbody>" + assertRows + "</tbody>" +
+          "</table></div>"
+        );
+      }
+
+      function renderReport(payload) {
+        const allPass = payload.failed === 0;
+        els.heading.textContent = "Test report";
+        els.heroLede.textContent = payload.heroLede ||
+          "On-page test results stay in your browser—no console required.";
+        els.reportTitle.textContent = payload.title;
+        els.reportStatus.innerHTML =
+          '<span class="report-badge ' + (allPass ? "pass" : "fail") + '">' +
+            (allPass ? "All checks passed" : payload.failed + " check(s) failed") +
+          "</span>" +
+          " · " + escapeHtml(payload.subtitle);
+
+        let html = "";
+        if (payload.batchSummaryHtml) html += payload.batchSummaryHtml;
+        if (payload.unitTestsHtml) html += payload.unitTestsHtml;
+        if (payload.detailHtml) html += payload.detailHtml;
+        els.reportBody.innerHTML = html;
+        showView("report");
+        return payload;
+      }
+
+      /**
+       * Randomly answers every question, validates scoring, and prints an HTML report.
+       * @param {number|object} [options] runs count (default 1) or { runs: N }
+       */
+      function runRandomTest(options) {
+        let runs = 1;
+        let length = state.length || 60;
+        if (typeof options === "number") runs = options;
+        else if (options && typeof options.runs === "number") runs = options.runs;
+        if (options && (options.length === 12 || options.length === 60)) length = options.length;
+        runs = Math.max(1, Math.min(500, Math.floor(runs) || 1));
+        lastRandomRuns = runs;
+        state.length = length;
+        state.deck = buildDeck(length);
+
+        const trials = [];
+        const winnerCounts = {};
+        ROLE_ORDER.forEach(function (id) { winnerCounts[id] = 0; });
+        let failedChecks = 0;
+
+        const deck = activeQuestions();
+        for (let i = 0; i < runs; i++) {
+          const answerIndexes = randomAnswerSet(deck);
+          const scored = scoreAnswers(answerIndexes, deck);
+          const checks = validateRun(answerIndexes, scored, deck);
+          const failed = checks.filter(function (c) { return !c.pass; }).length;
+          failedChecks += failed;
+          winnerCounts[scored.winnerId] += 1;
+          trials.push({
+            run: i + 1,
+            answerIndexes: answerIndexes,
+            scored: scored,
+            checks: checks,
+            failed: failed
+          });
+        }
+
+        const last = trials[trials.length - 1];
+        let batchSummaryHtml = "";
+        if (runs > 1) {
+          const dist = ROLE_ORDER.map(function (id) {
+            return "<li>" + escapeHtml(ROLES[id].name) + ": " + winnerCounts[id] + " / " + runs + "</li>";
+          }).join("");
+          const trialRows = trials.map(function (t) {
+            return (
+              "<tr class=\"assert-row " + (t.failed === 0 ? "pass" : "fail") + "\">" +
+                "<td>" + t.run + "</td>" +
+                "<td>" + escapeHtml(t.scored.winner) + "</td>" +
+                "<td>" + JSON.stringify(t.scored.scores) + "</td>" +
+                "<td>" + (t.failed === 0 ? "PASS" : "FAIL (" + t.failed + ")") + "</td>" +
+              "</tr>"
+            );
+          }).join("");
+          batchSummaryHtml =
+            "<h3 class=\"scores\">Batch summary (" + runs + " random runs)</h3>" +
+            "<ul class=\"report-summary-list\">" + dist + "</ul>" +
+            "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+              "<thead><tr><th>Run</th><th>Winner</th><th>Scores</th><th>Checks</th></tr></thead>" +
+              "<tbody>" + trialRows + "</tbody>" +
+            "</table></div>" +
+            "<h3 class=\"scores\">Detail of last run</h3>";
+        }
+
+        const payload = {
+          title: runs === 1 ? "Random answer automation" : "Random answer automation × " + runs,
+          subtitle: runs === 1
+            ? "One full random quiz scored and validated"
+            : runs + " independent random quizzes; last run detailed below",
+          failed: failedChecks,
+          heroLede: "Automated random answering ran without using the interactive quiz UI. Results stay in this page.",
+          batchSummaryHtml: batchSummaryHtml,
+          detailHtml: buildDetailHtml(last),
+          trials: trials
+        };
+
+        lastReportKind = "random";
+        console.log("ChildhoodRoleQuiz.runRandomTest", {
+          runs: runs,
+          failedChecks: failedChecks,
+          winnerCounts: winnerCounts,
+          lastWinner: last.scored.winner
+        });
+        return renderReport(payload);
+      }
+
+      /**
+       * Pure JS unit test suite for scoring behavior.
+       * Run from console: ChildhoodRoleQuiz.runTests()
+       * Or open index.html?test=1
+       */
+      function runTests(options) {
+        const showHtml = !options || options.render !== false;
+        const results = [];
+
+        function assert(name, condition, detail) {
+          results.push({
+            name: name,
+            pass: !!condition,
+            detail: detail || ""
+          });
+        }
+
+        const fullDeck = QUESTION_BANK.slice();
+        const shortDeck = buildDeck(12);
+
+        assert("short_deck_size", shortDeck.length === 12, "short=" + shortDeck.length);
+        assert("full_deck_size", fullDeck.length === 60, "full=" + fullDeck.length);
+        assert("lengths_multiple_of_roles", QUIZ_LENGTHS.every(function (n) { return n % ROLE_COUNT === 0; }), "lengths=" + QUIZ_LENGTHS);
+        ROLE_ORDER.forEach(function (roleId) {
+          const qs = ROLES[roleId].challengeQuestions || [];
+          assert(
+            "challenge_questions_" + roleId,
+            qs.length === 10,
+            ROLES[roleId].name + " has " + qs.length + " challenge questions"
+          );
+        });
+        runGrowthEdgeTests({ render: false }).checks.forEach(function (check) {
+          results.push(check);
+        });
+
+        ROLE_ORDER.forEach(function (roleId) {
+          const out = scoreAnswers(allAnswersForRole(roleId, fullDeck), fullDeck);
+          assert(
+            "unanimous60_" + roleId,
+            out.winnerId === roleId && out.scores[roleId] === 60 && Math.abs(out.normalized[roleId] - 1) < 1e-9,
+            "expected " + ROLES[roleId].name + ", got " + out.winner + " scores=" + JSON.stringify(out.scores)
+          );
+        });
+
+        ROLE_ORDER.forEach(function (roleId) {
+          const out = scoreAnswers(allAnswersForRole(roleId, shortDeck), shortDeck);
+          assert(
+            "unanimous12_" + roleId,
+            out.winnerId === roleId && out.scores[roleId] === 12 && Math.abs(out.normalized[roleId] - 1) < 1e-9,
+            "expected " + ROLES[roleId].name + ", got " + out.winner + " scores=" + JSON.stringify(out.scores)
+          );
+        });
+
+        // Same normalized profile across lengths: 50% role A / 50% role B
+        const half12 = shortDeck.map(function (q, qIndex) {
+          const prefer = qIndex < 6 ? "perfect" : "easy";
+          return q.options.findIndex(function (opt) { return opt.role === prefer; });
+        });
+        const half60 = fullDeck.map(function (q, qIndex) {
+          const prefer = qIndex < 30 ? "perfect" : "easy";
+          return q.options.findIndex(function (opt) { return opt.role === prefer; });
+        });
+        const norm12 = scoreAnswers(half12, shortDeck);
+        const norm60 = scoreAnswers(half60, fullDeck);
+        assert(
+          "normalization_matches_across_lengths",
+          Math.abs(norm12.normalized.perfect - 0.5) < 1e-9 &&
+            Math.abs(norm60.normalized.perfect - 0.5) < 1e-9 &&
+            Math.abs(norm12.normalized.perfect - norm60.normalized.perfect) < 1e-9,
+          JSON.stringify({ n12: norm12.normalized, n60: norm60.normalized })
+        );
+
+        /** Largest-remainder allocation so weight vectors map to integer counts that sum to n. */
+        function allocateCounts(n, weights) {
+          const raw = ROLE_ORDER.map(function (id) {
+            return { id: id, exact: n * (weights[id] || 0) };
+          });
+          const counts = {};
+          let used = 0;
+          raw.forEach(function (row) {
+            counts[row.id] = Math.floor(row.exact);
+            used += counts[row.id];
+          });
+          const remainders = raw
+            .map(function (row) {
+              return { id: row.id, frac: row.exact - Math.floor(row.exact) };
+            })
+            .sort(function (a, b) { return b.frac - a.frac; });
+          let left = n - used;
+          for (let i = 0; i < remainders.length && left > 0; i++) {
+            counts[remainders[i].id] += 1;
+            left -= 1;
+          }
+          return counts;
+        }
+
+        function answersFromWeights(deck, weights) {
+          const counts = allocateCounts(deck.length, weights);
+          const sequence = [];
+          ROLE_ORDER.forEach(function (id) {
+            for (let i = 0; i < counts[id]; i++) sequence.push(id);
+          });
+          if (sequence.length !== deck.length) {
+            throw new Error("allocation length mismatch");
+          }
+          return sequence.map(function (roleId, qIndex) {
+            return deck[qIndex].options.findIndex(function (opt) { return opt.role === roleId; });
+          });
+        }
+
+        function maxAbsNormDiff(a, b) {
+          let max = 0;
+          ROLE_ORDER.forEach(function (id) {
+            const d = Math.abs(a[id] - b[id]);
+            if (d > max) max = d;
+          });
+          return max;
+        }
+
+        function totalVariation(a, b) {
+          let sum = 0;
+          ROLE_ORDER.forEach(function (id) {
+            sum += Math.abs(a[id] - b[id]);
+          });
+          return sum / 2;
+        }
+
+        // Rounding bound: largest-remainder differs by at most 1 count per role → ≤ 1/12 on short form
+        const ROUNDING_TOL = 1 / 12 + 1e-9;
+
+        const similarityCases = [];
+        // Clear primary (75%) — should agree on winner and near-identical normalized shares
+        ROLE_ORDER.forEach(function (primary) {
+          const w = {};
+          ROLE_ORDER.forEach(function (id) { w[id] = 0.05; });
+          w[primary] = 0.75;
+          similarityCases.push({ name: "dom75_" + primary, weights: w, expectWinner: primary });
+        });
+        // Moderate primary (50%), rest equal
+        ROLE_ORDER.forEach(function (primary) {
+          const w = {};
+          ROLE_ORDER.forEach(function (id) { w[id] = 0.1; });
+          w[primary] = 0.5;
+          similarityCases.push({ name: "dom50_" + primary, weights: w, expectWinner: primary });
+        });
+        // Two-way splits
+        similarityCases.push({
+          name: "split_perfect_easy",
+          weights: { perfect: 0.5, easy: 0.5, struggling: 0, peacemaker: 0, parentified: 0, rebel: 0 },
+          expectWinner: "perfect"
+        });
+        similarityCases.push({
+          name: "split_peacemaker_parentified",
+          weights: { perfect: 0, easy: 0, struggling: 0, peacemaker: 0.5, parentified: 0.5, rebel: 0 },
+          expectWinner: "peacemaker"
+        });
+        // Three-way equal mass
+        similarityCases.push({
+          name: "three_way_achiever_block",
+          weights: { perfect: 1 / 3, easy: 1 / 3, struggling: 1 / 3, peacemaker: 0, parentified: 0, rebel: 0 },
+          expectWinner: "perfect"
+        });
+        // Near-uniform (tie-break → first max in ROLE_ORDER)
+        similarityCases.push({
+          name: "uniform",
+          weights: { perfect: 1 / 6, easy: 1 / 6, struggling: 1 / 6, peacemaker: 1 / 6, parentified: 1 / 6, rebel: 1 / 6 },
+          expectWinner: null
+        });
+
+        similarityCases.forEach(function (testcase) {
+          const out12 = scoreAnswers(answersFromWeights(shortDeck, testcase.weights), shortDeck);
+          const out60 = scoreAnswers(answersFromWeights(fullDeck, testcase.weights), fullDeck);
+          const diff = maxAbsNormDiff(out12.normalized, out60.normalized);
+          const tv = totalVariation(out12.normalized, out60.normalized);
+          assert(
+            "similar12_60_norm_" + testcase.name,
+            diff <= ROUNDING_TOL,
+            "maxAbsDiff=" + diff + " tv=" + tv + " n12=" + JSON.stringify(out12.normalized) + " n60=" + JSON.stringify(out60.normalized)
+          );
+          assert(
+            "similar12_60_winner_" + testcase.name,
+            out12.winnerId === out60.winnerId &&
+              (testcase.expectWinner === null || out12.winnerId === testcase.expectWinner),
+            "w12=" + out12.winnerId + " w60=" + out60.winnerId + " expected=" + testcase.expectWinner
+          );
+        });
+
+        // Monte Carlo: same preference weights, independent item sampling → winners usually agree
+        function sampleAnswersFromWeights(deck, weights, rand) {
+          const ids = ROLE_ORDER.slice();
+          const cdf = [];
+          let acc = 0;
+          ids.forEach(function (id) {
+            acc += weights[id] || 0;
+            cdf.push(acc);
+          });
+          return deck.map(function (q) {
+            const r = rand();
+            let pick = ids[ids.length - 1];
+            for (let i = 0; i < cdf.length; i++) {
+              if (r <= cdf[i]) {
+                pick = ids[i];
+                break;
+              }
+            }
+            return q.options.findIndex(function (opt) { return opt.role === pick; });
+          });
+        }
+
+        let seed = 42;
+        function mulberry32() {
+          seed |= 0;
+          seed = seed + 0x6D2B79F5 | 0;
+          let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+          t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+          return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        }
+
+        let agree = 0;
+        const mcTrials = 48;
+        for (let t = 0; t < mcTrials; t++) {
+          const primary = ROLE_ORDER[t % ROLE_ORDER.length];
+          const w = {};
+          ROLE_ORDER.forEach(function (id) { w[id] = 0.06; });
+          w[primary] = 0.7;
+          // Shared RNG stream so both decks draw from the same preference process
+          const out12 = scoreAnswers(sampleAnswersFromWeights(shortDeck, w, mulberry32), shortDeck);
+          const out60 = scoreAnswers(sampleAnswersFromWeights(fullDeck, w, mulberry32), fullDeck);
+          if (out12.winnerId === out60.winnerId) agree += 1;
+        }
+        const agreeRate = agree / mcTrials;
+        assert(
+          "similar12_60_monte_carlo_winner_agreement",
+          agreeRate >= 0.75,
+          "agreeRate=" + agreeRate + " (" + agree + "/" + mcTrials + ")"
+        );
+
+        // Majority Challenged One on full deck: 24 struggling, rest split
+        const majorityRoles = [];
+        for (let i = 0; i < fullDeck.length; i++) {
+          if (i < 24) majorityRoles.push("struggling");
+          else if (i < 34) majorityRoles.push("easy");
+          else if (i < 42) majorityRoles.push("peacemaker");
+          else if (i < 50) majorityRoles.push("parentified");
+          else if (i < 55) majorityRoles.push("perfect");
+          else majorityRoles.push("rebel");
+        }
+        const majorityIndexes = majorityRoles.map(function (roleId, qIndex) {
+          return fullDeck[qIndex].options.findIndex(function (opt) { return opt.role === roleId; });
+        });
+        const majorityOut = scoreAnswers(majorityIndexes, fullDeck);
+        assert(
+          "majority_challenged",
+          majorityOut.winnerId === "struggling" &&
+            majorityOut.scores.struggling === 24 &&
+            Math.abs(majorityOut.normalized.struggling - 0.4) < 1e-9,
+          JSON.stringify(majorityOut)
+        );
+
+        // Tie on full deck: 30/30, first-max wins (perfect)
+        const half = Math.floor(fullDeck.length / 2);
+        const tieAnswers = fullDeck.map(function (q, qIndex) {
+          const prefer = qIndex < half ? "perfect" : "easy";
+          return q.options.findIndex(function (opt) { return opt.role === prefer; });
+        });
+        const tieOut = scoreAnswers(tieAnswers, fullDeck);
+        assert(
+          "tie_break_first_max",
+          tieOut.winnerId === "perfect" &&
+            tieOut.scores.perfect === half &&
+            tieOut.scores.easy === fullDeck.length - half,
+          JSON.stringify(tieOut)
+        );
+
+        let threw = false;
+        try {
+          scoreAnswers([0, 1, 2]);
+        } catch (err) {
+          threw = true;
+        }
+        assert("rejects_short_array", threw, "expected Error for wrong length");
+
+        const failed = results.filter(function (r) { return !r.pass; });
+        const summary = {
+          passed: results.length - failed.length,
+          failed: failed.length,
+          total: results.length,
+          results: results
+        };
+
+        if (typeof console !== "undefined" && console.table) {
+          console.table(results);
+        }
+        console.log(
+          failed.length === 0
+            ? "ChildhoodRoleQuiz tests: ALL PASSED (" + summary.total + ")"
+            : "ChildhoodRoleQuiz tests: " + failed.length + " FAILED",
+          summary
+        );
+
+        if (showHtml) {
+          function rowsFor(list) {
+            return list.map(function (c) {
+              return (
+                '<tr class="assert-row ' + (c.pass ? "pass" : "fail") + '">' +
+                  "<td>" + (c.pass ? "PASS" : "FAIL") + "</td>" +
+                  "<td>" + escapeHtml(c.name) + "</td>" +
+                  "<td>" + escapeHtml(c.detail) + "</td>" +
+                "</tr>"
+              );
+            }).join("");
+          }
+
+          function tableFor(list) {
+            if (!list.length) return "";
+            return (
+              "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+                "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
+                "<tbody>" + rowsFor(list) + "</tbody>" +
+              "</table></div>"
+            );
+          }
+
+          const similar = results.filter(function (r) {
+            return r.name.indexOf("similar12_60") === 0 || r.name === "normalization_matches_across_lengths";
+          });
+          const scoring = results.filter(function (r) {
+            return r.name.indexOf("unanimous") === 0 ||
+              r.name.indexOf("challenge_questions_") === 0 ||
+              r.name === "majority_challenged" ||
+              r.name === "tie_break_first_max" ||
+              r.name === "rejects_short_array" ||
+              r.name === "short_deck_size" ||
+              r.name === "full_deck_size" ||
+              r.name === "lengths_multiple_of_roles";
+          });
+          const other = results.filter(function (r) {
+            return similar.indexOf(r) < 0 && scoring.indexOf(r) < 0;
+          });
+          const similarPassed = similar.filter(function (r) { return r.pass; }).length;
+          const mc = results.find(function (r) {
+            return r.name === "similar12_60_monte_carlo_winner_agreement";
+          });
+
+          lastReportKind = "unit";
+          renderReport({
+            title: "Scoring & 12↔60 similarity tests",
+            subtitle: summary.passed + " passed · " + summary.failed + " failed · " + summary.total + " total",
+            failed: summary.failed,
+            heroLede: "Unit scoring and 12↔60 similarity checks rendered below. Re-run anytime from the start screen.",
+            unitTestsHtml:
+              "<div class=\"test-summary\">" +
+                "<div class=\"test-stat\"><span class=\"num\">" + summary.total + "</span><span class=\"lbl\">Total</span></div>" +
+                "<div class=\"test-stat\"><span class=\"num\">" + summary.passed + "</span><span class=\"lbl\">Passed</span></div>" +
+                "<div class=\"test-stat\"><span class=\"num\">" + summary.failed + "</span><span class=\"lbl\">Failed</span></div>" +
+                "<div class=\"test-stat\"><span class=\"num\">" + similarPassed + "/" + similar.length + "</span><span class=\"lbl\">12↔60</span></div>" +
+              "</div>" +
+              "<p class=\"lede\">These checks confirm scoring math and that proportion-matched 12- and 60-question patterns produce similar normalized results.</p>" +
+              (mc
+                ? "<p class=\"report-meta\"><strong>Monte Carlo winner agreement:</strong> " + escapeHtml(mc.detail) + "</p>"
+                : "") +
+              "<h3 class=\"test-section-title\">Deck &amp; scoring</h3>" +
+              tableFor(scoring) +
+              "<h3 class=\"test-section-title\">12↔60 similarity</h3>" +
+              tableFor(similar) +
+              (other.length
+                ? "<h3 class=\"test-section-title\">Other</h3>" + tableFor(other)
+                : "")
+          });
+        }
+
+        return summary;
+      }
+
+      /**
+       * UI-focused checks for Growth-edge challenge questions.
+       * Run from console: ChildhoodRoleQuiz.runGrowthEdgeTests()
+       */
+      function runGrowthEdgeTests(options) {
+        const showHtml = !options || options.render !== false;
+        const checks = [];
+        const snapshot = {
+          length: state.length,
+          deck: state.deck.slice(),
+          index: state.index,
+          answers: state.answers.slice()
+        };
+
+        function assert(name, condition, detail) {
+          checks.push({
+            name: name,
+            pass: !!condition,
+            detail: detail || ""
+          });
+        }
+
+        try {
+          const shortDeck = buildDeck(12);
+          const roleA = "perfect";
+          const roleB = "rebel";
+
+          state.length = 12;
+          state.deck = shortDeck;
+          state.index = shortDeck.length - 1;
+          state.answers = allAnswersForRole(roleA, shortDeck);
+          renderResult();
+
+          let items = els.challengePanel.querySelectorAll("li");
+          assert(
+            "challenge_ui_roleA_count_10",
+            items.length === 10,
+            "rendered=" + items.length + " role=" + ROLES[roleA].name
+          );
+          assert(
+            "challenge_ui_initially_collapsed",
+            els.challengeToggleBtn.getAttribute("aria-expanded") === "false" &&
+              els.challengePanel.classList.contains("hidden") &&
+              els.challengePanel.hasAttribute("hidden"),
+            "expanded=" + els.challengeToggleBtn.getAttribute("aria-expanded")
+          );
+          assert(
+            "challenge_ui_initial_button_text",
+            els.challengeToggleBtn.textContent.trim() === "Show challenging questions",
+            'text="' + els.challengeToggleBtn.textContent.trim() + '"'
+          );
+
+          els.challengeToggleBtn.click();
+          assert(
+            "challenge_ui_open_on_click",
+            els.challengeToggleBtn.getAttribute("aria-expanded") === "true" &&
+              !els.challengePanel.classList.contains("hidden") &&
+              !els.challengePanel.hasAttribute("hidden") &&
+              els.challengeToggleBtn.textContent.trim() === "Hide challenging questions",
+            'expanded=' + els.challengeToggleBtn.getAttribute("aria-expanded") +
+              ' text="' + els.challengeToggleBtn.textContent.trim() + '"'
+          );
+
+          els.challengeToggleBtn.click();
+          assert(
+            "challenge_ui_close_on_click",
+            els.challengeToggleBtn.getAttribute("aria-expanded") === "false" &&
+              els.challengePanel.classList.contains("hidden") &&
+              els.challengePanel.hasAttribute("hidden") &&
+              els.challengeToggleBtn.textContent.trim() === "Show challenging questions",
+            'expanded=' + els.challengeToggleBtn.getAttribute("aria-expanded") +
+              ' text="' + els.challengeToggleBtn.textContent.trim() + '"'
+          );
+
+          state.answers = allAnswersForRole(roleB, shortDeck);
+          renderResult();
+          items = els.challengePanel.querySelectorAll("li");
+          const firstQ = items[0] ? items[0].textContent.trim() : "";
+          assert(
+            "challenge_ui_roleB_count_10",
+            items.length === 10,
+            "rendered=" + items.length + " role=" + ROLES[roleB].name
+          );
+          assert(
+            "challenge_ui_role_switch_content",
+            firstQ === ROLES[roleB].challengeQuestions[0],
+            'first="' + firstQ + '" expected="' + ROLES[roleB].challengeQuestions[0] + '"'
+          );
+        } finally {
+          state.length = snapshot.length;
+          state.deck = snapshot.deck.slice();
+          state.index = snapshot.index;
+          state.answers = snapshot.answers.slice();
+          goHome();
+        }
+
+        const failed = checks.filter(function (c) { return !c.pass; });
+        const summary = {
+          total: checks.length,
+          passed: checks.length - failed.length,
+          failed: failed.length,
+          checks: checks
+        };
+
+        console.log(
+          failed.length === 0
+            ? "ChildhoodRoleQuiz.runGrowthEdgeTests: ALL PASSED (" + summary.total + ")"
+            : "ChildhoodRoleQuiz.runGrowthEdgeTests: " + failed.length + " FAILED",
+          summary
+        );
+
+        if (showHtml) {
+          const rows = checks.map(function (c) {
+            return (
+              '<tr class="assert-row ' + (c.pass ? "pass" : "fail") + '">' +
+                "<td>" + (c.pass ? "PASS" : "FAIL") + "</td>" +
+                "<td>" + escapeHtml(c.name) + "</td>" +
+                "<td>" + escapeHtml(c.detail) + "</td>" +
+              "</tr>"
+            );
+          }).join("");
+          renderReport({
+            title: "Growth-edge UI test",
+            subtitle: "Challenge questions toggle and role-specific content checks",
+            status: failed.length === 0 ? "pass" : "fail",
+            counts: {
+              pass: summary.passed,
+              fail: summary.failed
+            },
+            html:
+              "<div class=\"report-table-wrap\"><table class=\"report-table\">" +
+                "<thead><tr><th>Status</th><th>Check</th><th>Detail</th></tr></thead>" +
+                "<tbody>" + rows + "</tbody>" +
+              "</table></div>",
+            heroLede: "UI verification for challenge-question rendering and toggle behavior."
+          });
+        }
+
+        return summary;
+      }
+
+      function parseQueryRuns() {
+        const match = (window.location.search || "").match(/[?&]random=(\d+)/);
+        if (match) return Math.max(1, parseInt(match[1], 10) || 1);
+        if (/\brandom=1\b/.test(window.location.search || "") || /\brandom\b/.test(window.location.search || "")) {
+          return 1;
+        }
+        return null;
+      }
+
+      window.ChildhoodRoleQuiz = {
+        score: scoreAnswers,
+        runTests: runTests,
+        runGrowthEdgeTests: runGrowthEdgeTests,
+        runRandomTest: runRandomTest,
+        startQuiz: startQuiz,
+        roles: ROLE_ORDER.map(function (id) { return ROLES[id].name; }),
+        lengths: QUIZ_LENGTHS
+      };
+
+      els.start12Btn.addEventListener("click", function () { startQuiz(12); });
+      els.start60Btn.addEventListener("click", function () { startQuiz(60); });
+      els.retakeBtn.addEventListener("click", function () { startQuiz(state.length); });
+      els.challengeToggleBtn.addEventListener("click", function () {
+        const open = els.challengeToggleBtn.getAttribute("aria-expanded") !== "true";
+        setChallengeOpen(open);
+      });
+      els.unitTestBtn.addEventListener("click", function () {
+        runTests({ render: true });
+      });
+      els.randomTestBtn.addEventListener("click", function () {
+        runRandomTest({ runs: 1, length: state.length || 60 });
+      });
+      els.reportHomeBtn.addEventListener("click", goHome);
+      els.reportRerunBtn.addEventListener("click", function () {
+        if (lastReportKind === "unit") {
+          runTests({ render: true });
+        } else {
+          runRandomTest({ runs: lastRandomRuns, length: state.length || 60 });
+        }
+      });
+
+      els.prevBtn.addEventListener("click", function () {
+        if (state.index > 0) {
+          state.index -= 1;
+          renderQuestion();
+        }
+      });
+
+      els.nextBtn.addEventListener("click", function () {
+        if (state.answers[state.index] === null) return;
+        const n = activeQuestions().length;
+        if (state.index < n - 1) {
+          state.index += 1;
+          renderQuestion();
+        } else if (answeredTotal() === n) {
+          renderResult();
+        }
+      });
+
+      if (/\btest=1\b/.test(window.location.search || "")) {
+        runTests({ render: true });
+      }
+      const autoRandom = parseQueryRuns();
+      if (autoRandom !== null && !/\btest=1\b/.test(window.location.search || "")) {
+        runRandomTest(autoRandom);
+      }
+    })();
+  </script>
+</body>
+</html>
