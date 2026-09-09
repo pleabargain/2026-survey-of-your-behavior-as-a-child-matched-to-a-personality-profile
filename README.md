@@ -93,6 +93,10 @@ Answers are scored entirely in the browser. Nothing is uploaded; there is no acc
 | `index.html` | Full app: UI, question bank, scoring, tests |
 | `README.md` | This document |
 
+## To-do
+
+- [ ] Figure out how to call Chrome’s built-in LLM (Prompt API / Gemini Nano via `LanguageModel`) from this standalone HTML, with a fallback when the API is unavailable.
+
 ## Disclaimer
 
 **This is not medical advice.** This quiz is a reflective self-insight tool, not a clinical diagnosis or substitute for professional care. Consult a qualified professional if you are experiencing self-assessment doubts.
